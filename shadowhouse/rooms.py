@@ -236,3 +236,53 @@ class Kitchen(Room):
                 "Enter pass-code": None,
                 "Look around": descr_around
               }
+
+
+class Garden(Room):
+
+    description = "\nYou are in the back garden."
+
+    descr_around = '''
+    It is dark, but, by the glow of the half-moon, you can make out the
+    lip of a well twelve paces ahead of you.
+
+    An orange and white cat walks toward a hole in the back fence.
+
+    South is the kitchen.'''
+
+    descr_cat = '''
+    The cat nonchalantly slinks through a tear in the mesh fence,
+    unperturbed by the pointy bits garlanding its edges. The hole is too
+    small for you to go through yourself, so you opt to use the fence
+    door, which, for whatever reason, you always find to be ajar.
+
+    You follow the cat down the back alley across a busy street, almost
+    losing sight of her as you try to avoid a city bus from running you
+    over. Weaving through sleepy residential areas on the other
+    side, you stare at the cat, mesmerized: the way she sashays, hides
+    under cars, licks her fur, stops to look around, deciding where to
+    explore next…
+
+    Unknowingly, you begin to transform. You shrink, your skin gets
+    hairier, and you start walking on your hands and knees until your
+    hands and knees become paws. You stop and think you hear squeaking.
+    Maybe if you bring a mouse back as a gift, your sapient serf will
+    set out tuna for dinner.'''
+
+    descr_well = '''
+    The hollow of the well is pitch-black. A rope ladder hangs from the
+    the top of the well and along its inner wall.'''
+
+    descr_south = '''
+    You try to go back to the kitchen, but the door is locked. Oddly,
+    there is no door knob, let alone a keypad on this side of the
+    door.'''
+
+
+    choices = {
+                "Follow cat": descr_cat,
+                "Look in well": descr_well,
+                "Go south": descr_south,
+                "Go down ladder": None,
+                "Look around": descr_around
+              }

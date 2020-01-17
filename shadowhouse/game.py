@@ -280,8 +280,7 @@ def enter_diningroom(seen_mannequin=False):
                                             randint(0,9)
                                           ]
 
-                    print(f'\n"{rooms.DiningRoom.descr_passcode} \
-                            {dedent({rooms.DiningRoom.stringify_passcode()})}"')
+                    print(f'\n"{rooms.DiningRoom.descr_passcode} {rooms.DiningRoom.stringify_passcode()}"')
 
                     add_points(10, 'din_talk2')
                 else:
@@ -337,10 +336,6 @@ def enter_kitchen():
                 print(rooms.Kitchen.potatoes, "potato.")
                 add_points(1, 'kit_pot' + str(rooms.Kitchen.potatoes))
             else:
-                s_chill = '''
-                Dude, you picked up all the potatoes.
-
-                Chill, Janelle. Chill.'''
                 print(dedent(rooms.Kitchen.descr_chill))
 
         elif choice == "Drop potatoes":
@@ -388,9 +383,6 @@ def enter_kitchen():
                         dead(dedent(ooms.Kitchen.descr_explode))
 
                 else:
-                    s_secondshot = '''
-                    I'm going to be nice here and give you a second shot at
-                    this. Maybe you forgot to talk to someone or something...'''
                     print(dedent(rooms.Kitchen.descr_secondshot))
 
             except ValueError:
@@ -404,13 +396,12 @@ def enter_kitchen():
         else: bad_input(choice)
 
 
-def enter_garden(seen_ladder = False):
+def enter_garden(seen_ladder=False):
     '''Garden Room'''
 
-    print("\nYou are in the back garden.")
+    print(dedent(rooms.Garden.description))
 
-    hints = ["Look around", "Follow cat", "Look in well", "Go south",
-    "Go down ladder"]
+    hints = rooms.Garden.get_choices()
 
     while(True):
 
@@ -419,55 +410,25 @@ def enter_garden(seen_ladder = False):
         #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
 
+        if choice == "Quit" or choice == "quit": quit()
+
         if choice =="Look around":
-            s_dark ='''
-            It is dark, but, by the glow of the half-moon, you can make out the
-            lip of a well twelve paces ahead of you.
-
-            An orange and white cat walks toward a hole in the back fence.
-
-            South is the kitchen.'''
-            print(dedent(s_dark))
-
+            print(dedent(rooms.Garden.choices.get(choice)))
             add_points(10, "gard_look")
 
         elif choice == "Follow cat":
-            s_cat = '''
-            The cat nonchalantly slinks through a tear in the mesh fence,
-            unperturbed by the pointy bits garlanding its edges. The hole is too
-            small for you to go through yourself, so you opt to use the fence
-            door, which, for whatever reason, you always find to be ajar.
-
-            You follow the cat down the back alley across a busy street, almost
-            losing sight of her as you try to avoid a city bus from running you
-            over. Weaving through sleepy residential areas on the other
-            side, you stare at the cat, mesmerized: the way she sashays, hides
-            under cars, licks her fur, stops to look around, deciding where to
-            explore next…
-
-            Unknowingly, you begin to transform. You shrink, your skin gets
-            hairier, and you start walking on your hands and knees until your
-            hands and knees become paws. You stop and think you hear squeaking.
-            Maybe if you bring a mouse back as a gift, your sapient serf will
-            set out tuna for dinner.'''
-            dead(dedent(s_cat))
+            dead(dedent(rooms.Garden.choices.get(choice)))
 
         elif choice == "Look in well":
             s_inwell = '''
             The hollow of the well is pitch-black. A rope ladder hangs from the
             the top of the well and along its inner wall.'''
-            print(dedent(s_inwell))
+            print(dedent(rooms.Garden.choices.get(choice)))
             seen_ladder = True
-
             add_points(5, "gard_well")
 
         elif choice == "Go south":
-            s_cant = '''
-            You try to go back to the kitchen, but the door is locked. Oddly,
-            there is no door knob, let alone a keypad on this side of the
-            door.'''
-            print(dedent(s_cant))
-
+            print(dedent(rooms.Garden.choices.get(choice)))
             add_points(1,'gard_south')
 
         elif choice == "Go down ladder":
@@ -480,14 +441,9 @@ def enter_garden(seen_ladder = False):
         elif choice == "Hint":
             show_hints(hints)
 
-        elif choice == "Quit" or "quit":
-            quit()
-
-        elif choice == "Score":
-            show_score()
-
-        else:
-            bad_input(choice)
+        elif choice == "Score" or choice == "score": show_score()
+        elif choice == "Hint" or choice == "hint": show_hints(hints)
+        else: bad_input(choice)
 
 
 def enter_well():
