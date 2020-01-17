@@ -56,6 +56,7 @@ Special thanks to LK for additional dialogue concepts ;-).
 Copyright © Alex Dunne, 2018. All rights reserved.
 """
 
+import sys
 import scenes
 
 def run_game():
@@ -74,7 +75,7 @@ def run_game():
         scenes.basement()
     except KeyboardInterrupt: #user kills process with Ctrl-C
         print("\n")
-        exit(0)
+        sys.exit()
 
 
 

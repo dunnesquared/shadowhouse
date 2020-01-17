@@ -1,4 +1,4 @@
-from sys import exit
+import sys
 from random import randint
 from textwrap import dedent
 from time import sleep
@@ -43,7 +43,6 @@ DICT_SCORE = {
 
 '''Player's name'''
 WINNER_NAME = 'Anonymous'
-
 
 '''Number of potatos picked up in the kitchen; needs to be global for the case
 where the player picks up the potatoes, goes back to dining room, then returns
@@ -104,13 +103,13 @@ def dead(why):
     print("\nThanks for playing! Better luck next time :-p.\n")
 
     #Zero not necessary, but kept in make clear exiting here is normal
-    exit(0)
+    quit()
 
 
 def quit():
-    '''Exit game. '0' means normal exit: no errors '''
+    '''Exits game.'''
     print("")
-    exit(0)
+    sys.exit()
 
 
 def ascii_animation():
@@ -322,7 +321,7 @@ def basement():
         elif choice == "Hint":
             show_hints(hints)
 
-        elif choice == "Quit":
+        elif choice == "Quit" or "quit":
             quit()
 
         elif choice == "Score":
@@ -458,7 +457,7 @@ def dining_room(seen_mannequin = False):
         elif choice == "Hint":
             show_hints(hints)
 
-        elif choice == "Quit":
+        elif choice == "Quit" or "quit":
             quit()
 
         elif choice == "Score":
@@ -595,7 +594,7 @@ def kitchen():
         elif choice == "Hint":
             show_hints(hints)
 
-        elif choice == "Quit":
+        elif choice == "Quit" or "quit":
             quit()
 
         elif choice == "Score":
@@ -681,7 +680,7 @@ def garden(seen_ladder = False):
         elif choice == "Hint":
             show_hints(hints)
 
-        elif choice == "Quit":
+        elif choice == "Quit" or "quit":
             quit()
 
         elif choice == "Score":
@@ -728,6 +727,9 @@ def well():
 
         elif choice == "Score":
             show_score()
+
+        elif choice == "Quit" or "quit":
+            quit()
 
         else:
             pass
@@ -789,4 +791,4 @@ def end_game():
 
     credits()
 
-    exit(0)
+    quit()
