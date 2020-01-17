@@ -48,8 +48,7 @@ WINNER_NAME = 'Anonymous'
 '''Number of potatos picked up in the kitchen; needs to be global for the case
 where the player picks up the potatoes, goes back to dining room, then returns
 to kitchen'''
-
-potato = 0
+NUM_POTATO = 0
 
 """----------------------------HELPER FUNCTIONS------------------------------"""
 #Functions which if they did nothing would not really hinder game play, but
@@ -207,27 +206,6 @@ def credits():
 
 
 """----------------------------STORY FUNCTIONS------------------------------"""
-#Game behaviour; Plot(s); Functions that contain passages players must read
-
-def run_game():
-    '''Start running game. Handle CTRL-C exception from user in case she
-    quits game this way (avoids printing ugly stack trace)'''
-
-    print("")
-    print("\t      ****************SHADOW HOUSE****************")
-    print("\t          There's no place like home, except...")
-
-    print("\n\t         Type 'Score' to show, um, your score.")
-    print("\t       Type 'Quit' to leave the game at any time.")
-    print("\t      ********************************************")
-
-    try:
-        basement()
-    except KeyboardInterrupt: #user kills process with Ctrl-C
-        print("\n")
-        exit(0)
-
-
 def basement():
     '''Basement Room'''
 
@@ -494,7 +472,7 @@ def kitchen():
     '''Kitchen Room'''
     print("\nYou are in the kitchen.")
 
-    global potato
+    global NUM_POTATO
     hints = ["Look around", "Open door", "Pick up potato", "Drop potatoes",
     "Kiss potatoes", "Enter pass-code", "Go right"]
 
@@ -522,11 +500,11 @@ def kitchen():
             add_points(1,'kit_open')
 
         elif choice == "Pick up potato":
-            if potato < 3:
-                potato +=1
+            if NUM_POTATO < 3:
+                NUM_POTATO +=1
                 print("")
-                print(potato, "potato.")
-                add_points(1, 'kit_pot' + str(potato))
+                print(NUM_POTATO, "potato.")
+                add_points(1, 'kit_pot' + str(NUM_POTATO))
             else:
                 s_chill = '''
                 Dude, you picked up all the potatoes.
@@ -535,11 +513,11 @@ def kitchen():
                 print(dedent(s_chill))
 
         elif choice == "Drop potatoes":
-            if(potato !=0):
+            if(NUM_POTATO != 0):
                 print("\nOkay.")
-                add_points(potato*(-1))
-                potato = 0
-            elif potato == 0:
+                add_points(NUM_POTATO * (-1))
+                NUM_POTATO = 0
+            elif NUM_POTATO == 0:
                 print("\nWuhhh? You don't have any potatoes.")
 
 
@@ -574,12 +552,12 @@ def kitchen():
 
                     #Go to garden if pass-code is right and user has picked up
                     #all the potatoes
-                    if correct == True and potato == 3:
+                    if correct == True and NUM_POTATO == 3:
                         print("\nThe door unlocks!")
                         add_points(10, 'kit_code')
                         garden()
 
-                    elif correct == True and potato != 3:
+                    elif correct == True and NUM_POTATO != 3:
                         s_nopotatoes = '''
                         The deadbolt retracts and then shoots out again. You
                         pull and twist the door knob several times, but it
