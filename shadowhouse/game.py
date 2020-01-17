@@ -193,7 +193,7 @@ def credits():
     Apologies to DFW and DL for using their big ideas for my very small ones.
     Special thanks to LK for additional dialogue concepts ;-).
 
-    Copyright © Alex Dunne, 2018. All rights reserved.
+    Copyright © Alex Dunne, 2018-2020. All rights reserved.
     '''
     print(dedent(s_credits))
 
@@ -485,32 +485,7 @@ def win():
     #Trivial animation of player 'falling'
     ascii_animation()
 
-    s_win = '''
-    Although it seems to take an infinite amount of energy to release your
-    grip, you let go of the ladder and begin to drop through the void.
-
-    The first moments (minutes? hours? days?) are a blank—you must’ve have
-    blacked out from shock. You vaguely remember the feeling of gravity sucking
-    your skeleton and innards through the pores of your skin. Just a feeling,
-    fortunately.
-
-    Now conscious and calm, you open your body such that you are no longer
-    tumbling but falling spreadeagled. Where your fingertips ought to be
-    grazing the well's walls is nothing. Only darkness and the restorative
-    perfume of the earth after a thunderstorm, petrichor, surrounds you.
-    As you plummet, a breeze rather than a gale caresses your face. It is more
-    like someone’s cool breath than air resistance.
-
-    Below, the twinkling dot whose existence you initially doubted has
-    gotten no bigger but is more defined. It is a sun's disc, a mote of gold.
-    Looking at it somehow drives away all the angst and loneliness you have
-    suffered quietly all your life. And, although you cannot see them, you
-    somehow know that there are others like yourself serenely soaring toward
-    this convergence point for all things true.
-
-    END'''
-
-    print(dedent(s_win))
+    print(dedent(rooms.Win.description))
 
     end_game()
 
