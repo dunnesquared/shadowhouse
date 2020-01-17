@@ -449,14 +449,7 @@ def enter_garden(seen_ladder=False):
 def enter_well():
     '''Well room'''
 
-    s_rung = '''
-    You reach the ladder's final rung and sense you are nowhere near the well’s
-    bottom. Your stretched-out foot cuts empty air.
-
-    There seems to be a twinkling dot far far below. But maybe it’s just an
-    illusion.'''
-
-    print(dedent(s_rung))
+    print(dedent(rooms.Well.description))
 
     while(True):
 
@@ -465,28 +458,23 @@ def enter_well():
         #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
 
+        if choice == "Quit" or choice == "quit": quit()
+
         if choice == "Go up ladder":
-            s_upladder = '''
-            You climb the ladder and get out of the well. A wise decision'''
-            print(dedent(s_upladder))
+            print(dedent(rooms.Well.choices.get(choice)))
             enter_garden(seen_ladder=True)
 
         elif choice == "Go down ladder":
-            s_downladder = '''You're on the final rung--you can't technically
-            go down any more than you already have.'''
-            print(dedent(s_downladder))
+            print(dedent(rooms.Well.choices.get(choice)))
             add_points(1, 'well_down')
 
         elif choice == "Let go of ladder":
             add_points(25, 'well_fall')
             win()
 
-        elif choice == "Score":
-            show_score()
-
-        elif choice == "Quit" or "quit":
-            quit()
-
+        elif choice == "Score" or choice == "score": show_score()
+        elif choice == "Hint" or choice == "hint":
+            print("Fizzzzzzzzzzzzzzzzzzzzzzzzz....")
         else:
             pass
 

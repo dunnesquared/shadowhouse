@@ -286,3 +286,50 @@ class Garden(Room):
                 "Go down ladder": None,
                 "Look around": descr_around
               }
+
+
+class Well(Room):
+    description = '''
+    You reach the ladder's final rung and sense you are nowhere near the well’s
+    bottom. Your stretched-out foot cuts empty air.
+
+    There seems to be a twinkling dot far far below. But maybe it’s just an
+    illusion.'''
+
+    descr_upladder = '''
+    You climb the ladder and get out of the well. A wise decision'''
+
+    descr_downladder = '''
+    You're on the final rung--you can't technically go down any more
+    than you already have.'''
+
+    choices = {
+                "Go up ladder": descr_upladder,
+                "Go down ladder": descr_downladder
+              }
+
+class Win(Room):
+    description = '''
+    Although it seems to take an infinite amount of energy to release your
+    grip, you let go of the ladder and begin to drop through the void.
+
+    The first moments (minutes? hours? days?) are a blank—you must’ve have
+    blacked out from shock. You vaguely remember the feeling of gravity sucking
+    your skeleton and innards through the pores of your skin. Just a feeling,
+    fortunately.
+
+    Now conscious and calm, you open your body such that you are no longer
+    tumbling but falling spreadeagled. Where your fingertips ought to be
+    grazing the well's walls is nothing. Only darkness and the restorative
+    perfume of the earth after a thunderstorm, petrichor, surrounds you.
+    As you plummet, a breeze rather than a gale caresses your face. It is more
+    like someone’s cool breath than air resistance.
+
+    Below, the twinkling dot whose existence you initially doubted has
+    gotten no bigger but is more defined. It is a sun's disc, a mote of gold.
+    Looking at it somehow drives away all the angst and loneliness you have
+    suffered quietly all your life. And, although you cannot see them, you
+    somehow know that there are others like yourself serenely soaring toward
+    this convergence point for all things true.
+
+    END'''
