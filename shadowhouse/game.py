@@ -208,11 +208,9 @@ def credits():
 
 """----------------------------STORY FUNCTIONS------------------------------"""
 def enter_basement():
-    '''Basement Room'''
     basement = rooms.Basement()
     hints = rooms.Basement.get_choices()
 
-    # Use dedent to remove unseemly indentations in the above long string
     print(dedent(rooms.Basement.description))
 
     # Get input
@@ -239,24 +237,21 @@ def enter_basement():
             add_points(10, 'base_read')
         elif choice == "Look around":
             print(dedent(rooms.Basement.choices.get(choice)))
+
         elif choice == "Score" or choice == "score": show_score()
         elif choice == "Hint" or choice == "hint": show_hints(hints)
         else: bad_input(choice)
 
 
-def enter_diningroom(seen_mannequin = False):
-    '''Dining room Room'''
+def enter_diningroom(seen_mannequin=False):
 
-    print("\nYou are in the dining room.")
+    print(rooms.DiningRoom.description)
 
-    #initialize variables
-    global PASS_CODE
-    talk_once = False
-    talk_twice = False
-    look_around = seen_mannequin
+    diningroom = rooms.DiningRoom(seen_mannequin)
+    diningroom.talk_once = False
+    diningroom.talk_twice = False
 
-    hints = ["Look around", "Eat veggie straws", "Touch mannequin",
-    "Talk to mannequin", "Go left", "Go downstairs"]
+    hints = rooms.DiningRoom.get_choices()
 
     while(True):
         choice = input("\n> ")
@@ -264,120 +259,58 @@ def enter_diningroom(seen_mannequin = False):
         #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
 
+        if choice == "Quit" or choice == "quit": quit()
+
         #choices
         if choice=="Look around":
-            s_diningroom = '''
-            A naked mannequin sits at the head of an oak table. Except for the
-            contours of her plastic body, she is featureless, her face as bare
-            as an egg. The primer-white surface neck and chest gleam under the
-            fluorescent lights of the chandelier. The Venetian blinds
-            behind the mannequin are shut. The dining room has a suffocating
-            aspect to it.
-
-            A standing fan in the corner laps you with warm air.
-
-            A bowl of veggie straws sits on the mannequin’s placemat.
-
-            There is a doorway on the other end of the room to your left.
-
-            Downstairs is the basement.'''
-            print(dedent(s_diningroom))
-            look_around = True
-
+            print(dedent(rooms.DiningRoom.choices.get(choice)))
+            diningroom.look_around = True
             add_points(10, 'din_look')
-
         #eat food
         elif choice == "Eat veggie straws":
-            s_veggiestraws = '''
-            You hesitate. Which colour to pick? Green? Orange? Yellow? How to
-            decide??
-
-            After an hour of embarrassing indecision, you timidly extract a
-            spinach straw. You glance at the mannequin as you gobble it up,
-            unable to shake the feeling that she is judging you.
-
-            Although the veggie straw's airirness is pleasing, it is clearly
-            under-seasoned. You take a seat at the table and continue to munch
-            from the bowl, which is apparently inexhaustible. The hope that
-            you’ll find a more flavourful straw is replaced by the gloomy
-            realization that life is also often under-seasoned.
-
-            You eat ad infinitum.'''
-            dead(dedent(s_veggiestraws))
-
+            dead(dedent(rooms.DiningRoom.choices.get(choice)))
         elif choice == "Touch mannequin":
-            print("\nShame on you! This is not that kind of game ;-).")
+            print(rooms.DiningRoom.choices.get(choice))
             add_points(1, 'din_touch')
-
         elif choice == "Talk to mannequin":
-
-            if look_around == True:
-
-                if talk_once == False:
-
-                    talk_once = True
-
-                    s_talkonce = '''
-                    At first the mannequin ignores your blather when suddenly
-                    she says:
-
-                    "The fruits of all our labours will not be wasted on
-                    soul-consuming tasks.”'''
-
-                    print(dedent(s_talkonce))
-
+            if diningroom.look_around == True:
+                if diningroom.talk_once == False:
+                    diningroom.talk_once = True
+                    print(dedent(rooms.DiningRoom.choices.get(choice)))
                     add_points(5, 'din_talk1')
+                elif diningroom.talk_twice == False:
+                    diningroom.talk_twice = True
+                    # Generate random pass-code each time player plays game
+                    rooms.DiningRoom.passcode = [
+                                            randint(0,9),
+                                            randint(0,9),
+                                            randint(0,9),
+                                            randint(0,9)
+                                          ]
 
-                elif talk_twice == False:
-
-                    talk_twice = True
-
-                    #Generate random pass-code each time player plays game
-                    PASS_CODE = [randint(0,9), randint(0,9), randint(0,9),
-                    randint(0,9)]
-
-                    s = f"{PASS_CODE[0]} {PASS_CODE[1]} {PASS_CODE[2]} {PASS_CODE[3]}"
-                    print(f"\n\"Remember these numbers: {dedent(s)}\"")
+                    print(f'\n"{rooms.DiningRoom.descr_passcode} \
+                            dedent({rooms.DiningRoom.stringify_passcode()})"')
 
                     add_points(10, 'din_talk2')
-
                 else:
-                    s_toomuch = '''
-                    The mannequin has nothing more to say to you. She's an
-                    introvert -- stop draining her energy with purposeless
-                    conversation!'''
-                    print(dedent(s_toomuch))
-
+                    print(dedent(rooms.DiningRoom.descr_toomuch))
                     add_points(1,'din_talk3')
-
             else:
-                print("\nWuh?? What mannequin?")
+                print(rooms.DiningRoom.descr_nomannequin)
 
         elif choice == "Go left":
-            if look_around == True:
+            if diningroom.look_around == True:
                 add_points(5, 'din_left')
                 enter_kitchen()
             else:
-                s_slowdown = '''
-                Slow down there, cowboy. What's the rush? Maybe you should look
-                around first...'''
-                print(dedent(s_slowdown))
-
+                print(dedent(rooms.DiningRoom.descr_slowdown))
         elif choice == "Go downstairs":
-            print("\nDo you really want to go back down there? Hello, spider…")
+            print(rooms.DiningRoom.choices.get(choice))
             add_points(1,'din_down')
 
-        elif choice == "Hint":
-            show_hints(hints)
-
-        elif choice == "Quit" or "quit":
-            quit()
-
-        elif choice == "Score":
-            show_score()
-
-        else:
-            bad_input(choice)
+        elif choice == "Score" or choice == "score": show_score()
+        elif choice == "Hint" or choice == "hint": show_hints(hints)
+        else: bad_input(choice)
 
 
 def enter_kitchen():

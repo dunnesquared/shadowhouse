@@ -3,6 +3,7 @@ class Room():
     def get_choices(cls):
         return list(cls.choices.keys())
 
+
 class Basement(Room):
 
     description = '''
@@ -86,3 +87,88 @@ class Basement(Room):
 
     def __init__(self):
         self.notebook_read = False
+
+
+class DiningRoom(Room):
+
+    passcode = None
+
+    description = "\nYou are in the dining room."
+
+    descr_around = '''
+    A naked mannequin sits at the head of an oak table. Except for the
+    contours of her plastic body, she is featureless, her face as bare
+    as an egg. The primer-white surface neck and chest gleam under the
+    fluorescent lights of the chandelier. The Venetian blinds
+    behind the mannequin are shut. The dining room has a suffocating
+    aspect to it.
+
+    A standing fan in the corner laps you with warm air.
+
+    A bowl of veggie straws sits on the mannequin’s placemat.
+
+    There is a doorway on the other end of the room to your left.
+
+    Downstairs is the basement.'''
+
+    descr_straws = '''
+    You hesitate. Which colour to pick? Green? Orange? Yellow? How to
+    decide??
+
+    After an hour of embarrassing indecision, you timidly extract a
+    spinach straw. You glance at the mannequin as you gobble it up,
+    unable to shake the feeling that she is judging you.
+
+    Although the veggie straw's airirness is pleasing, it is clearly
+    under-seasoned. You take a seat at the table and continue to munch
+    from the bowl, which is apparently inexhaustible. The hope that
+    you’ll find a more flavourful straw is replaced by the gloomy
+    realization that life is also often under-seasoned.
+
+    You eat ad infinitum.'''
+
+    descr_touch = "\nShame on you! This is not that kind of game ;-)."
+
+    descr_talk = '''
+    At first the mannequin ignores your blather when suddenly
+    she says:
+
+    "The fruits of all our labours will not be wasted on
+    soul-consuming tasks.”'''
+
+    descr_toomuch = '''
+    The mannequin has nothing more to say to you. She's an
+    introvert -- stop draining her energy with purposeless
+    conversation!'''
+
+    descr_nomannequin = "\nWuh?? What mannequin?"
+
+    descr_slowdown = '''
+    Slow down there, cowboy. What's the rush? Maybe you should look
+    around first...'''
+
+    descr_left = ""
+
+    descr_down = "\nDo you really want to go back down there? Hello, spider…"
+
+    descr_passcode = "Remember these numbers:"
+
+
+    choices = {
+                "Eat veggie straws": descr_straws,
+                "Touch mannequin": descr_touch,
+                "Talk to mannequin": descr_talk,
+                "Go left": descr_left,
+                "Go downstairs": descr_down,
+                "Look around": descr_around
+              }
+
+
+    def __init__(self, seen_mannequin=False):
+        self.talk_once = False
+        self.talk_twice = False
+        self.look_around = seen_mannequin
+
+    @classmethod
+    def stringify_passcode(cls):
+        return f"{cls.passcode[0]} {cls.passcode[1]} {cls.passcode[2]} {cls.passcode[3]}"
