@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#Bash script that launches Shadow House, beta version
+
+#Set size of window: rows columns
+resize -s 49 75
+
+#Clear terminal/console window
+clear
+
+#Changes directory to current directory that contains Python file.
+#No idea how it works.
+cd "$(dirname "$0")"
+
+#Set background of terminal window to black (can't assume user has
+#this pre-selected)
+tput setab 0
+
+#Set font to bold and color. Go to Wikipedia/Google "tput" for more colours
+tput bold
+tput setaf 7 #white
+
+#Run Python file
+python3 ../shadowhouse/shadowhouse.py
+
+#comment out - not necessary
+#echo -n "Good-bye!!"
+#echo
+#echo
