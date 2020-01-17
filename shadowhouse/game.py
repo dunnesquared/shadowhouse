@@ -4,6 +4,8 @@ from textwrap import dedent
 from time import sleep
 from datetime import datetime
 
+import rooms
+
 
 """---------------------------------GLOBAL-----------------------------------"""
 
@@ -207,128 +209,39 @@ def credits():
 """----------------------------STORY FUNCTIONS------------------------------"""
 def enter_basement():
     '''Basement Room'''
+    basement = rooms.Basement()
+    hints = rooms.Basement.get_choices()
 
-    #Define initial variable before entering input loop
-    notebook_read = False
-    hints = ["Watch TV", "Squash spider", "Go upstairs",
-    "Read notebook", "Look around"]
+    # Use dedent to remove unseemly indentations in the above long string
+    print(dedent(rooms.Basement.description))
 
-    #Text 'Look around' description of basement
-    descr_basement = '''
-    You are sitting on a cozy sofa in the basement of your childhood home.
-
-    Night paints small windows that open on to the front lawn and the
-    alley between your house and the neighbour’s. The air is cool down here.
-    A sticky film of sweat coats your bare legs and arms.
-
-    A TV remote sits next to your lap.
-    A notebook lies on the table in front of you.
-    A hairy spider, the size of a cupcake, crawls near your sandalled foot.'''
-
-    #Use dedent to remove unseemly indentations in the above long string
-    print(dedent(descr_basement))
-
-
-    #Get input
+    # Get input
     while(True):
         choice = input("\n> ")
-
-        #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
 
+        if choice == "Quit" or choice == "quit": quit()
+
         if choice == "Watch TV":
-
-            s_turntv ='''
-            You grab the remote and hit the POWER button. The TV hisses and
-            cracks. Slowly, an image fades on to its glass. On top of the
-            television, you notice an unbroken copy of “Infinite Jest”
-            gathering dust.
-
-            The images are, at once, foggy yet vividly clear. For only a few
-            moments are you able to register what you’re seeing: a beautiful
-            woman whose face is horribly disfigured; a wailing baby’s head which
-            is zoomed into but never seen any closer, like a fractal.
-
-            You cannot stop watching The Entertainment. Like a toppled Babushka
-            doll, you fall from your perch on the sofa to the floor.
-
-            Several hours later, a tubby coroner waves a lit Gauloise over your
-            corpse as he tells Special Det. Alvin Gumby the autopsy's
-            conclusion:
-
-            “It’s textbook, Gum-man: death by dehydration and too much
-            fuuuunnnn!” '''
-            dead(dedent(s_turntv))
-
+            dead(dedent(rooms.Basement.choices.get(choice)))
         elif choice == "Squash spider":
-
-            s_squash = '''
-            The teal silver-back Colombian jumping spider springs on to your
-            foot and sinks its fangs. You kick your leg violently until
-            the arachnid flies off. It cuts through the air like a spinning wad
-            of wet toilet paper, hitting the the glass of your VCR/Nintendo
-            cabinet with an assertive rattle and splat.
-
-            A stinging, then a burning, then a numbness, first in your
-            right pinky but not a minute later everywhere. You think of Agent
-            Cooper, Laura Palmer and a white stallion galloping in black space.
-            The last thing you see is a spinning ceiling fan. You think:
-
-            "Who the hell has a ceiling fan in their basement?" "'''
-            dead(dedent(s_squash))
-
+            dead(dedent(rooms.Basement.choices.get(choice)))
         elif choice == "Go upstairs":
-
-            if notebook_read == False:
-                s_banana = '''
-                You climb the stairs, but slip on a slimy banana peel (yes —
-                this can happen in real life, not just in cartoons). The fall
-                forward, let’s say, makes you a lot less pretty than you were
-                once renowned for. A lot less.'''
-                dead(dedent(s_banana))
-
+            if basement.notebook_read == False:
+                dead(dedent(rooms.Basement.descr_banana))
             else:
-                s_upstairs = '''
-                You climb the musty, blue carpet staircase, narrowly avoiding
-                a slimy banana peel lying in the middle of a step.
-
-                At the top of the stairs you walk a few paces down the hall and
-                make a left.'''
-                print(dedent(s_upstairs))
-
+                print(dedent(rooms.Basement.choices.get(choice)))
                 add_points(5, 'base_upstairs')
-
                 enter_diningroom()
-
         elif choice == "Read notebook":
-            s_read = '''
-            The notebook turns out to be your old diary. You glaze over
-            the many cringeworthy passages, but two shout out at you.
-            You have no idea why.
-
-            "Many die where they blindly tread.”
-            “Peanut-butter-and-banana sandwiches rock!!”
-
-            Your stomach rumbles.'''
-            print(dedent(s_read))
-            notebook_read = True
-
+            print(dedent(rooms.Basement.choices.get(choice)))
+            basement.notebook_read = True
             add_points(10, 'base_read')
-
         elif choice == "Look around":
-            print("\nYou already did that.")
-
-        elif choice == "Hint":
-            show_hints(hints)
-
-        elif choice == "Quit" or "quit":
-            quit()
-
-        elif choice == "Score":
-            show_score()
-
-        else:
-            bad_input(choice)
+            print(dedent(rooms.Basement.choices.get(choice)))
+        elif choice == "Score" or choice == "score": show_score()
+        elif choice == "Hint" or choice == "hint": show_hints(hints)
+        else: bad_input(choice)
 
 
 def enter_diningroom(seen_mannequin = False):
