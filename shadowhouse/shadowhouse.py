@@ -57,7 +57,8 @@ Copyright © Alex Dunne, 2018. All rights reserved.
 """
 
 import sys
-import scenes
+
+import game
 
 def run_game():
     '''Start running game. Handle CTRL-C exception from user in case she
@@ -72,7 +73,7 @@ def run_game():
     print("\t      ********************************************")
 
     try:
-        scenes.basement()
+        game.enter_basement()
     except KeyboardInterrupt: #user kills process with Ctrl-C
         print("\n")
         sys.exit()
