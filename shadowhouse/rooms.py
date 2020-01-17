@@ -153,7 +153,6 @@ class DiningRoom(Room):
 
     descr_passcode = "Remember these numbers:"
 
-
     choices = {
                 "Eat veggie straws": descr_straws,
                 "Touch mannequin": descr_touch,
@@ -166,9 +165,74 @@ class DiningRoom(Room):
 
     def __init__(self, seen_mannequin=False):
         self.talk_once = False
+
+
         self.talk_twice = False
         self.look_around = seen_mannequin
 
     @classmethod
     def stringify_passcode(cls):
         return f"{cls.passcode[0]} {cls.passcode[1]} {cls.passcode[2]} {cls.passcode[3]}"
+
+
+class Kitchen(Room):
+
+
+    description = "\nYou are in the kitchen."
+
+    potatoes = 0
+
+    descr_door = "\nThe door is locked. You notice a keypad on the door."
+
+    descr_around = '''
+    Scattered on the black and white chequered linoleum floor are three
+    potatoes.
+
+    A door leads to the garden.
+
+    The dining room is to your right.'''
+
+    descr_chill = '''
+    Dude, you picked up all the potatoes.
+
+    Chill, Janelle. Chill.'''
+
+    descr_nopotatoes = "\nWuhhh? You don't have any potatoes."
+
+    descr_kiss = '''
+    Oh, baby! You and the potatoes fall in love and beget a cute family
+    of tater-tots. You grow old, greasy and happy. Life could not have
+    turned out better. And yet, when you’re alone and see a shooting
+    star split in the twilit sky, you wonder what your future would’ve
+    been like had you stayed on your quest.'''
+
+    descr_noopen = '''
+    The deadbolt retracts and then shoots out again. You
+    pull and twist the door knob several times, but it
+    won’t give.
+
+    You stare menacingly at the potatoes on the floor…'''
+
+    descr_wrong = '''
+    Did you really think that was going to work? Seriously,
+    I'm curious: '''
+
+    descr_explode = '''
+    Interesting, but, meh, what can you do.
+
+    The universe explodes and everyone dies. Nice work. As
+    today's youth would say: YOLO!'''
+
+    descr_secondshot = '''
+    I'm going to be nice here and give you a second shot at
+    this. Maybe you forgot to talk to someone or something...'''
+
+    choices = {
+                "Open door": descr_door,
+                "Pick up potato": None,
+                "Drop potatoes": None,
+                "Go right": None,
+                "Kiss potatoes": descr_kiss,
+                "Enter pass-code": None,
+                "Look around": descr_around
+              }

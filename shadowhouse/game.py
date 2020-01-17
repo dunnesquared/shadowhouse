@@ -9,9 +9,6 @@ import rooms
 
 """---------------------------------GLOBAL-----------------------------------"""
 
-'''List of numbers to open garden door once defined'''
-PASS_CODE = None
-
 '''Accumulated points'''
 POINTS = 0
 
@@ -45,11 +42,6 @@ DICT_SCORE = {
 
 '''Player's name'''
 WINNER_NAME = 'Anonymous'
-
-'''Number of potatos picked up in the kitchen; needs to be global for the case
-where the player picks up the potatoes, goes back to dining room, then returns
-to kitchen'''
-NUM_POTATO = 0
 
 """----------------------------HELPER FUNCTIONS------------------------------"""
 #Functions which if they did nothing would not really hinder game play, but
@@ -289,7 +281,7 @@ def enter_diningroom(seen_mannequin=False):
                                           ]
 
                     print(f'\n"{rooms.DiningRoom.descr_passcode} \
-                            dedent({rooms.DiningRoom.stringify_passcode()})"')
+                            {dedent({rooms.DiningRoom.stringify_passcode()})}"')
 
                     add_points(10, 'din_talk2')
                 else:
@@ -314,12 +306,12 @@ def enter_diningroom(seen_mannequin=False):
 
 
 def enter_kitchen():
-    '''Kitchen Room'''
-    print("\nYou are in the kitchen.")
+
+    print(rooms.Kitchen.description)
 
     global NUM_POTATO
-    hints = ["Look around", "Open door", "Pick up potato", "Drop potatoes",
-    "Kiss potatoes", "Enter pass-code", "Go right"]
+
+    hints = rooms.Kitchen.get_choices()
 
     #choices
     while(True):
@@ -328,126 +320,88 @@ def enter_kitchen():
         #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
 
+        if choice == "Quit" or choice == "quit": quit()
+
         if choice == "Look around":
-            s_potatoes = '''
-            Scattered on the black and white chequered linoleum floor are three
-            potatoes.
-
-            A door leads to the garden.
-
-            The dining room is to your right.'''
-            print(dedent(s_potatoes))
-
+            print(dedent(rooms.Kitchen.choices.get(choice)))
             add_points(10, 'kit_look')
 
         elif choice == "Open door":
-            print("\nThe door is locked. You notice a keypad on the door.")
+            print(rooms.Kitchen.choices.get(choice))
             add_points(1,'kit_open')
 
         elif choice == "Pick up potato":
-            if NUM_POTATO < 3:
-                NUM_POTATO +=1
+            if rooms.Kitchen.potatoes < 3:
+                rooms.Kitchen.potatoes +=1
                 print("")
-                print(NUM_POTATO, "potato.")
-                add_points(1, 'kit_pot' + str(NUM_POTATO))
+                print(rooms.Kitchen.potatoes, "potato.")
+                add_points(1, 'kit_pot' + str(rooms.Kitchen.potatoes))
             else:
                 s_chill = '''
                 Dude, you picked up all the potatoes.
 
                 Chill, Janelle. Chill.'''
-                print(dedent(s_chill))
+                print(dedent(rooms.Kitchen.descr_chill))
 
         elif choice == "Drop potatoes":
-            if(NUM_POTATO != 0):
+            if(rooms.Kitchen.potatoes != 0):
                 print("\nOkay.")
-                add_points(NUM_POTATO * (-1))
-                NUM_POTATO = 0
-            elif NUM_POTATO == 0:
-                print("\nWuhhh? You don't have any potatoes.")
-
+                add_points(rooms.Kitchen.potatoes * (-1))
+                rooms.Kitchen.potatoes = 0
+            elif rooms.Kitchen.potatoes == 0:
+                print(rooms.Kitchen.descr_nopotatoes)
 
         elif choice == "Kiss potatoes":
-            s_kiss = '''
-            Oh, baby! You and the potatoes fall in love and beget a cute family
-            of tater-tots. You grow old, greasy and happy. Life could not have
-            turned out better. And yet, when you’re alone and see a shooting
-            star split in the twilit sky, you wonder what your future would’ve
-            been like had you stayed on your quest.'''
-            dead(dedent(s_kiss))
+            dead(dedent(rooms.Kitchen.descr_kiss))
 
         elif choice == "Enter pass-code":
 
             try:
-
                 #Fetch pass code from global variable
                 #More readable to compare with user input
-                if PASS_CODE != None:
+                if rooms.DiningRoom.passcode != None:
 
                     n1 = int(input("\nEnter first digit: "))
                     n2 = int(input("Enter second digit: "))
                     n3 = int(input("Enter third digit: "))
                     n4 = int(input("Enter fourth digit: "))
 
-                    pc1 = int(PASS_CODE[0])
-                    pc2 = int(PASS_CODE[1])
-                    pc3 = int(PASS_CODE[2])
-                    pc4 = int(PASS_CODE[3])
+                    pc1 = int(rooms.DiningRoom.passcode[0])
+                    pc2 = int(rooms.DiningRoom.passcode[1])
+                    pc3 = int(rooms.DiningRoom.passcode[2])
+                    pc4 = int(rooms.DiningRoom.passcode[3])
 
                     correct = n1 == pc1 and n2 == pc2 and n3 == pc3 and n4 == pc4
 
                     #Go to garden if pass-code is right and user has picked up
                     #all the potatoes
-                    if correct == True and NUM_POTATO == 3:
+                    if correct == True and rooms.Kitchen.potatoes == 3:
                         print("\nThe door unlocks!")
                         add_points(10, 'kit_code')
                         enter_garden()
 
-                    elif correct == True and NUM_POTATO != 3:
-                        s_nopotatoes = '''
-                        The deadbolt retracts and then shoots out again. You
-                        pull and twist the door knob several times, but it
-                        won’t give.
-
-                        You stare menacingly at the potatoes on the floor…'''
-                        print(dedent(s_nopotatoes))
+                    elif correct == True and rooms.Kitchen.potatoes != 3:
+                        print(dedent(rooms.Kitchen.descr_noopen))
 
                     elif correct == False:
-                        s_wrong = '''
-                        Did you really think that was going to work? Seriously,
-                        I'm curious: '''
-                        input(dedent(s_wrong))
-
-                        s_explode = '''
-                        Interesting, but, meh, what can you do.
-
-                        The universe explodes and everyone dies. Nice work. As
-                        today's youth would say: YOLO!'''
-                        dead(dedent(s_explode))
+                        input(dedent(rooms.Kitchen.descr_wrong))
+                        dead(dedent(ooms.Kitchen.descr_explode))
 
                 else:
                     s_secondshot = '''
                     I'm going to be nice here and give you a second shot at
                     this. Maybe you forgot to talk to someone or something...'''
-                    print(dedent(s_secondshot))
-
+                    print(dedent(rooms.Kitchen.descr_secondshot))
 
             except ValueError:
                 print("\nWhole numbers only, nitwit!")
 
         elif choice == "Go right":
-            enter_diningroom(True)
+            enter_diningroom(seen_mannequin=True)
 
-        elif choice == "Hint":
-            show_hints(hints)
-
-        elif choice == "Quit" or "quit":
-            quit()
-
-        elif choice == "Score":
-            show_score()
-
-        else:
-            bad_input(choice)
+        elif choice == "Score" or choice == "score": show_score()
+        elif choice == "Hint" or choice == "hint": show_hints(hints)
+        else: bad_input(choice)
 
 
 def enter_garden(seen_ladder = False):
