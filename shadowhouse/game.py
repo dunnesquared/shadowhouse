@@ -44,6 +44,15 @@ DICT_SCORE = {
 '''Player's name'''
 WINNER_NAME = 'Anonymous'
 
+CREDITS = '''
+***CREDITS***
+Story, writing and coding by Alex Dunne.
+Apologies to DFW and DL for using their big ideas for my very small ones.
+Special thanks to LK for additional dialogue concepts ;-).
+
+Copyright © Alex Dunne, 2018-2020. All rights reserved.
+'''
+
 """----------------------------HELPER FUNCTIONS------------------------------"""
 #Functions which if they did nothing would not really hinder game play, but
 #would make it highly awkward
@@ -215,15 +224,7 @@ def write_winner_to_file():
 
 def credits():
     '''End credits'''
-    s_credits = '''
-    ***CREDITS***
-    Story, writing and coding by Alex Dunne.
-    Apologies to DFW and DL for using their big ideas for my very small ones.
-    Special thanks to LK for additional dialogue concepts ;-).
-
-    Copyright © Alex Dunne, 2018-2020. All rights reserved.
-    '''
-    print(dedent(s_credits))
+    print(dedent(CREDITS))
 
 
 """----------------------------STORY FUNCTIONS------------------------------"""
