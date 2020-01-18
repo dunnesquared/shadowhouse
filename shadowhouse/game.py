@@ -306,7 +306,7 @@ def enter_basement():
 
 
 def enter_diningroom(seen_mannequin=False):
-    """Handles event loop and game state for basement.
+    """Handles event loop and game state for dining room.
 
     Args:
         seen_mannequin: Boolean that describes whether player has already
@@ -383,10 +383,9 @@ def enter_diningroom(seen_mannequin=False):
 
 
 def enter_kitchen():
+    """Handles event loop and game state for kitchen."""
 
     print(rooms.Kitchen.description)
-
-    global NUM_POTATO
 
     hints = rooms.Kitchen.get_choices()
 
@@ -394,7 +393,6 @@ def enter_kitchen():
     while(True):
         choice = input("\n> ")
 
-        #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
 
         if choice == "Look around":
@@ -428,8 +426,7 @@ def enter_kitchen():
         elif choice == "Enter pass-code":
 
             try:
-                #Fetch pass code from global variable
-                #More readable to compare with user input
+                # Compare with passcode mannequin gave
                 if rooms.DiningRoom.passcode != None:
 
                     n1 = int(input("\nEnter first digit: "))
@@ -442,10 +439,13 @@ def enter_kitchen():
                     pc3 = int(rooms.DiningRoom.passcode[2])
                     pc4 = int(rooms.DiningRoom.passcode[3])
 
-                    correct = n1 == pc1 and n2 == pc2 and n3 == pc3 and n4 == pc4
+                    correct = (n1 == pc1 and
+                               n2 == pc2 and
+                               n3 == pc3 and
+                               n4 == pc4)
 
-                    #Go to garden if pass-code is right and user has picked up
-                    #all the potatoes
+                    # Go to garden if pass-code is right and user has picked up
+                    # all the potatoes
                     if correct == True and rooms.Kitchen.potatoes == 3:
                         print("\nThe door unlocks!")
                         add_points(10, 'kit_code')
@@ -466,6 +466,7 @@ def enter_kitchen():
 
         elif choice == "Go right":
             enter_diningroom(seen_mannequin=True)
+            
         else:
             common_input(choice, hints)
 
