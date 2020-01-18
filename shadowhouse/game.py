@@ -55,6 +55,7 @@ Copyright © Alex Dunne, 2018-2020. All rights reserved.
 '''
 
 """----------------------------HELPER FUNCTIONS-----------------------------"""
+
 def show_hints(hints):
     """Prints allowable commands for a given room.
 
@@ -172,7 +173,6 @@ def ascii_animation():
         # Period of a single frame
         sleep(1 / fps)
 
-
     # Dot at bottom of screen when player stops falling
     print('\n' * 15)
     print('\t' * (c) + '   ∙')
@@ -248,7 +248,26 @@ def credits():
     print(dedent(CREDITS))
 
 
+def common_input(choice, hints=None):
+    """Groups common commands that are required when player enters a room.
+
+    Args:
+        choice: String representing command.
+        hints: List of choices players can enter in a room.
+    """
+
+    if choice == "Quit" or choice == "quit":
+        quit()
+    elif choice == "Score" or choice == "score":
+        show_score()
+    elif choice == "Hint" or choice == "hint":
+        show_hints(hints)
+    else:
+        bad_input(choice)
+
+
 """----------------------------STORY FUNCTIONS------------------------------"""
+
 def enter_basement():
     basement = rooms.Basement()
     hints = rooms.Basement.get_choices()
@@ -259,8 +278,6 @@ def enter_basement():
     while(True):
         choice = input("\n> ")
         choice = choice.strip()
-
-        if choice == "Quit" or choice == "quit": quit()
 
         if choice == "Watch TV":
             dead(dedent(rooms.Basement.choices.get(choice)))
@@ -279,10 +296,8 @@ def enter_basement():
             add_points(10, 'base_read')
         elif choice == "Look around":
             print(dedent(rooms.Basement.choices.get(choice)))
-
-        elif choice == "Score" or choice == "score": show_score()
-        elif choice == "Hint" or choice == "hint": show_hints(hints)
-        else: bad_input(choice)
+        else:
+            common_input(choice, hints)
 
 
 def enter_diningroom(seen_mannequin=False):
@@ -300,8 +315,6 @@ def enter_diningroom(seen_mannequin=False):
 
         #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
-
-        if choice == "Quit" or choice == "quit": quit()
 
         #choices
         if choice=="Look around":
@@ -348,10 +361,8 @@ def enter_diningroom(seen_mannequin=False):
         elif choice == "Go downstairs":
             print(rooms.DiningRoom.choices.get(choice))
             add_points(1,'din_down')
-
-        elif choice == "Score" or choice == "score": show_score()
-        elif choice == "Hint" or choice == "hint": show_hints(hints)
-        else: bad_input(choice)
+        else:
+            common_input(choice, hints)
 
 
 def enter_kitchen():
@@ -368,8 +379,6 @@ def enter_kitchen():
 
         #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
-
-        if choice == "Quit" or choice == "quit": quit()
 
         if choice == "Look around":
             print(dedent(rooms.Kitchen.choices.get(choice)))
@@ -440,10 +449,8 @@ def enter_kitchen():
 
         elif choice == "Go right":
             enter_diningroom(seen_mannequin=True)
-
-        elif choice == "Score" or choice == "score": show_score()
-        elif choice == "Hint" or choice == "hint": show_hints(hints)
-        else: bad_input(choice)
+        else:
+            common_input(choice, hints)
 
 
 def enter_garden(seen_ladder=False):
@@ -459,8 +466,6 @@ def enter_garden(seen_ladder=False):
 
         #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
-
-        if choice == "Quit" or choice == "quit": quit()
 
         if choice =="Look around":
             print(dedent(rooms.Garden.choices.get(choice)))
@@ -491,9 +496,8 @@ def enter_garden(seen_ladder=False):
         elif choice == "Hint":
             show_hints(hints)
 
-        elif choice == "Score" or choice == "score": show_score()
-        elif choice == "Hint" or choice == "hint": show_hints(hints)
-        else: bad_input(choice)
+        else:
+            common_input(choice, hints)
 
 
 def enter_well():
