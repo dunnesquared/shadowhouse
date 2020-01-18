@@ -318,12 +318,8 @@ def enter_diningroom(seen_mannequin=False):
 
     print(rooms.DiningRoom.description)
 
-    diningroom = rooms.DiningRoom(seen_mannequin)
-
-    # Has yet to talk to mannequin 
-    diningroom.talk_once = False
-    diningroom.talk_twice = False
-
+    rooms.DiningRoom.look_around = seen_mannequin
+    
     hints = rooms.DiningRoom.get_choices()
 
     while(True):
@@ -335,22 +331,24 @@ def enter_diningroom(seen_mannequin=False):
         #choices
         if choice=="Look around":
             print(dedent(rooms.DiningRoom.choices.get(choice)))
-            diningroom.look_around = True
+            rooms.DiningRoom.look_around = True
             add_points(10, 'din_look')
-        #eat food
+
         elif choice == "Eat veggie straws":
             dead(dedent(rooms.DiningRoom.choices.get(choice)))
+
         elif choice == "Touch mannequin":
             print(rooms.DiningRoom.choices.get(choice))
             add_points(1, 'din_touch')
+
         elif choice == "Talk to mannequin":
-            if diningroom.look_around == True:
-                if diningroom.talk_once == False:
-                    diningroom.talk_once = True
+            if rooms.DiningRoom.look_around == True:
+                if rooms.DiningRoom.talk_once == False:
+                    rooms.DiningRoom.talk_once = True
                     print(dedent(rooms.DiningRoom.choices.get(choice)))
                     add_points(5, 'din_talk1')
-                elif diningroom.talk_twice == False:
-                    diningroom.talk_twice = True
+                elif rooms.DiningRoom.talk_twice == False:
+                    rooms.DiningRoom.talk_twice = True
                     # Generate random pass-code each time player plays game
                     rooms.DiningRoom.passcode = [
                                             random.randint(0,9),
@@ -369,7 +367,7 @@ def enter_diningroom(seen_mannequin=False):
                 print(rooms.DiningRoom.descr_nomannequin)
 
         elif choice == "Go left":
-            if diningroom.look_around == True:
+            if rooms.DiningRoom.look_around == True:
                 add_points(5, 'din_left')
                 enter_kitchen()
             else:

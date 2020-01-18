@@ -92,6 +92,9 @@ class Basement(Room):
 class DiningRoom(Room):
 
     passcode = None
+    talk_once = False
+    talk_twice = False
+    look_around = False
 
     description = "\nYou are in the dining room."
 
@@ -162,13 +165,6 @@ class DiningRoom(Room):
                 "Look around": descr_around
               }
 
-
-    def __init__(self, seen_mannequin=False):
-        self.talk_once = False
-
-
-        self.talk_twice = False
-        self.look_around = seen_mannequin
 
     @classmethod
     def stringify_passcode(cls):
