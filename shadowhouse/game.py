@@ -8,7 +8,7 @@ from datetime import datetime
 # Module containing descriptions of each room player enters
 import rooms
 
-"""---------------------------------GLOBAL-----------------------------------"""
+"""---------------------------------GLOBAL----------------------------------"""
 
 '''Accumulated points'''
 POINTS = 0
@@ -18,7 +18,7 @@ TOTAL = 119
 
 '''Dictionary to keep track of which points players has garnered'''
 DICT_SCORE = {
-            'base_read':False,
+            'base_read': False,
             'base_upstairs':False,
             'din_look': False,
             'din_talk1': False,
@@ -36,7 +36,7 @@ DICT_SCORE = {
             'gard_look': False,
             'gard_well': False,
             'gard_down': False,
-            'gard_south':False,
+            'gard_south': False,
             'well_fall': False,
             'well_down': False
             }
@@ -54,27 +54,36 @@ Special thanks to LK for additional dialogue concepts ;-).
 Copyright © Alex Dunne, 2018-2020. All rights reserved.
 '''
 
-"""----------------------------HELPER FUNCTIONS------------------------------"""
-#Functions which if they did nothing would not really hinder game play, but
-#would make it highly awkward
+"""----------------------------HELPER FUNCTIONS-----------------------------"""
 def show_hints(hints):
-    '''Show possible commands for a given room'''
+    """Prints allowable commands for a given room.
+
+    Args:
+        hints: String list of possible commands.
+    """
 
     print("\nPossible commands")
     print("------------------")
+
     for item in hints:
         print(item)
 
 
-def add_points(num, id = None):
-    '''Add points to score while ensuring players aren't double-dipping'''
+def add_points(num, id=None):
+    """Adds points to score while ensuring players aren't 'double-dipping'
+    (i.e. repeating the same action to increase score)
+
+    Args:
+        num: Integer number of points to be added.
+        id: String the identifies part of game where player earned points.
+    """
 
     global POINTS
     global DICT_SCORE
 
-    #if no id specified, just add the points
-    #Otherwise, set id from False to True (first time scoring)
-    #If already True, do nothing
+    # If no id specified, just add the points.
+    # Otherwise, change id from False to True for first-time scoring.
+    # If already True, then player has already earned points. Do nothing.
     if id == None:
         POINTS += num
     elif DICT_SCORE[id] == False:
@@ -85,14 +94,19 @@ def add_points(num, id = None):
 
 
 def show_score():
-    '''Show points accumulated thus far.'''
-    global POINTS, TOTAL
+    """Prints points accumulated thus far."""
+
     print(f"\nScore: {POINTS} out of {TOTAL} points")
 
 
-def bad_input(s):
-    '''Handle unknown words and no input'''
-    if len(s.strip()) == 0:
+def bad_input(input):
+    """Prints feedback when player enters illegal commands or nothing.
+
+    Args:
+        input: String representing player's command.
+
+    """
+    if len(input.strip()) == 0:
         print("\nC'mon. Don't be a dweeb. Write something.")
     else:
         s_words = '''
@@ -102,74 +116,77 @@ def bad_input(s):
 
 
 def dead(why):
-    '''Print why user died and exits game'''
+    """Prints why user died and exits game.
+
+    Args:
+        why: String describing cause of death.
+    """
+
     print(why)
     print("\nThanks for playing! Better luck next time :-p.\n")
 
-    #Zero not necessary, but kept in make clear exiting here is normal
     quit()
 
 
 def quit():
-    '''Exits game.'''
-    print("")
+    """Exits game."""
+
+    print("") # For aesthetic purposes
+
     sys.exit()
 
 
 def ascii_animation():
-    '''Trivial animation of player "falling" '''
+    """Prints animation of player 'falling'"""
 
-    #Number of tabs generally required to center animation
+    # Number of tabs generally required to center animation
     c = 4
 
-    #Animation loop parameters (fps: frames per second)
+    # Animation loop parameters (fps: frames per second)
     fps = 18
     sec = 5
     frames = int(sec * fps)
 
-    #Falling down!
+    # Player falling down!
     for x in range(frames):
 
         if x % 2 == 0:
-            print('\t'*c +"?" + "\n"*3)
+            print('\t' * c +"?" + "\n" * 3)
 
-        print('\t'*c +'  /00\\')
-        print('\t'*c +'   ||')
+        print('\t' * c + '  /00\\')
+        print('\t' * c + '   ||')
         if x % 3 == 0:
-            print('\t'*c +' >====v')
+            print('\t' * c + ' >====v')
         if x % 3 == 1:
-            print('\t'*c +' v====<')
+            print('\t' * c + ' v====<')
         if x % 3 == 2:
-            print('\t'*c +' >====<')
-        print('\t'*c +'   ||')
-        print('\t'*c +'   /\\')
+            print('\t' * c + ' >====<')
+        print('\t' * c + '   ||')
+        print('\t' * c + '   /\\')
 
         if x % 2 != 0:
-            print("\n"*3 + '\t'*c + "\t?")
+            print("\n" * 3 + '\t' * c + "\t?")
 
-        print('\n'*5)
+        print('\n' * 5)
 
-        #period of a single frame
-        sleep(1/fps)
+        # Period of a single frame
+        sleep(1 / fps)
 
 
-    #side = " ♘  ☯︎  ♞"
-    #for x in range(int(len(side)*0.5)):
-    #    print('\t'*(c) + side)
+    # Dot at bottom of screen when player stops falling
+    print('\n' * 15)
+    print('\t' * (c) + '   ∙')
 
-    #Dot
-    print('\n'*15)
-    print('\t'*(c) + '   ∙' )
-
-    #Pause for three seconds
+    # Pause for three seconds before carrying on with the game (suspense!)
     sleep(3)
 
+
 def _get_dir():
-    """Returns absolute path of the directory where module exists.
+    """Gets absolute path of the directory where module exists.
 
     Returns:
-        dir (str): the unique ('canonical') absolute path of the directory
-                   containing the module (i.e. no symbolic links in path).
+        dir: String of the unique ('canonical') absolute path of the directory
+             containing the module (i.e. no symbolic links in path).
     """
 
     # Get the current working directory in Terminal
@@ -188,43 +205,46 @@ def _get_dir():
 
 
 def write_winner_to_file():
-    '''Write date, player's name and score to file'''
+    """Writes date, player's name and score to file."""
 
     global WINNER_NAME
-    #Truncate any name to a max of 15 characters
+
+    # Truncate any name to a max of 15 characters.
     if len(WINNER_NAME) > 15:
         WINNER_NAME = WINNER_NAME[:15]
-    #Add spaces to name to make it 15 characters long
+
+    # Add spaces to name to make it 15 characters long if shorter.
     elif len(WINNER_NAME) <= 15:
-        WINNER_NAME = WINNER_NAME + ' '*(15-len(WINNER_NAME))
+        WINNER_NAME = WINNER_NAME + ' ' * (15-len(WINNER_NAME))
 
-
-    #Fetch current date and time; format as desired using format codes
-    #right_now = datetime.now().strftime("%a, %b %d, %Y, %I:%M %p")
+    # Fetch current date and time; format as desired using format codes.
     right_now = datetime.now().strftime("%Y-%m-%d, %I:%M %p")
 
-    #Format how to present the player's score
+    # Format how to present the player's score
     s_score = f"{POINTS} out of {TOTAL} points"
 
-    #Combine all parts together to form single string record
+    # Combine all parts together to form single string record
     rec = WINNER_NAME + '\t'*3 + right_now + '\t'*3 + s_score + "\n"
 
-    # Get directory where input exists, i.e. same dir as this module
-    absdir = _get_dir()
+    try:
+        # Get directory where this file exists
+        absdir = _get_dir()
 
-    # Intelligently concatenate the directory and the input file name
-    # together
-    full_filename = os.path.join(absdir, "scores.dat")
+        # Intelligently concatenate the directory and the input file name
+        # together
+        full_filename = os.path.join(absdir, "scores.dat")
 
-    file_handler = open(full_filename, 'a')
+        with open(full_filename, 'a') as fin:
+            fin.write(rec +"\n")
 
-    file_handler.write(rec +"\n")
-
-    file_handler.close()
+    except OSError as err:
+        print("OSError: {0}".format(err), file=sys.stderr)
+        print("Score.dat not loaded. Exiting program.", file=sys.stderr)
+        sys.exit()
 
 
 def credits():
-    '''End credits'''
+    """Prints end credits."""
     print(dedent(CREDITS))
 
 
