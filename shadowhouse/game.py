@@ -5,6 +5,7 @@ from textwrap import dedent
 from time import sleep
 from datetime import datetime
 
+# Module containing descriptions of each room player enters
 import rooms
 
 """---------------------------------GLOBAL-----------------------------------"""
@@ -40,9 +41,10 @@ DICT_SCORE = {
             'well_down': False
             }
 
-'''Player's name'''
+'''Player's name. Anonymous if none specified.'''
 WINNER_NAME = 'Anonymous'
 
+'''End credits'''
 CREDITS = '''
 ***CREDITS***
 Story, writing and coding by Alex Dunne.
