@@ -1,12 +1,11 @@
 import sys
 import os
-from random import randint
+import random
 from textwrap import dedent
 from time import sleep
 from datetime import datetime
 
 import rooms
-
 
 """---------------------------------GLOBAL-----------------------------------"""
 
@@ -303,10 +302,10 @@ def enter_diningroom(seen_mannequin=False):
                     diningroom.talk_twice = True
                     # Generate random pass-code each time player plays game
                     rooms.DiningRoom.passcode = [
-                                            randint(0,9),
-                                            randint(0,9),
-                                            randint(0,9),
-                                            randint(0,9)
+                                            random.randint(0,9),
+                                            random.randint(0,9),
+                                            random.randint(0,9),
+                                            random.randint(0,9)
                                           ]
 
                     print(f'\n"{rooms.DiningRoom.descr_passcode} {rooms.DiningRoom.stringify_passcode()}"')
