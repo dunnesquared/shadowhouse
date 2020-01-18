@@ -305,18 +305,10 @@ def enter_basement():
             common_input(choice, hints)
 
 
-def enter_diningroom(seen_mannequin=False):
-    """Handles event loop and game state for dining room.
-
-    Args:
-        seen_mannequin: Boolean that describes whether player has already
-                        seen the mannequin in this room. By default, she
-                        has not.
-    """
+def enter_diningroom():
+    """Handles event loop and game state for dining room."""
 
     print(rooms.DiningRoom.description)
-
-    rooms.DiningRoom.look_around = seen_mannequin
 
     hints = rooms.DiningRoom.get_choices()
 
@@ -338,6 +330,8 @@ def enter_diningroom(seen_mannequin=False):
             add_points(1, 'din_touch')
 
         elif choice == "Talk to mannequin":
+
+            # Can't talk to mannequin unless player has seen it first
             if rooms.DiningRoom.look_around == True:
 
                 if rooms.DiningRoom.talk_once == False:
@@ -465,8 +459,8 @@ def enter_kitchen():
                 print("\nWhole numbers only, nitwit!")
 
         elif choice == "Go right":
-            enter_diningroom(seen_mannequin=True)
-            
+            enter_diningroom()
+
         else:
             common_input(choice, hints)
 
