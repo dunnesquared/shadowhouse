@@ -323,10 +323,8 @@ def enter_diningroom(seen_mannequin=False):
     while(True):
         choice = input("\n> ")
 
-        #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
 
-        #choices
         if choice=="Look around":
             print(dedent(rooms.DiningRoom.choices.get(choice)))
             rooms.DiningRoom.look_around = True
@@ -341,26 +339,30 @@ def enter_diningroom(seen_mannequin=False):
 
         elif choice == "Talk to mannequin":
             if rooms.DiningRoom.look_around == True:
+
                 if rooms.DiningRoom.talk_once == False:
                     rooms.DiningRoom.talk_once = True
                     print(dedent(rooms.DiningRoom.choices.get(choice)))
                     add_points(5, 'din_talk1')
+
                 elif rooms.DiningRoom.talk_twice == False:
                     rooms.DiningRoom.talk_twice = True
-                    # Generate random pass-code each time player plays game
+
                     rooms.DiningRoom.passcode = [
-                                            random.randint(0,9),
-                                            random.randint(0,9),
-                                            random.randint(0,9),
-                                            random.randint(0,9)
-                                          ]
+                                                 random.randint(0,9),
+                                                 random.randint(0,9),
+                                                 random.randint(0,9),
+                                                 random.randint(0,9)
+                                                ]
 
                     print(f'\n"{rooms.DiningRoom.descr_passcode} {rooms.DiningRoom.stringify_passcode()}"')
 
                     add_points(10, 'din_talk2')
+
                 else:
                     print(dedent(rooms.DiningRoom.descr_toomuch))
                     add_points(1,'din_talk3')
+
             else:
                 print(rooms.DiningRoom.descr_nomannequin)
 
@@ -368,11 +370,14 @@ def enter_diningroom(seen_mannequin=False):
             if rooms.DiningRoom.look_around == True:
                 add_points(5, 'din_left')
                 enter_kitchen()
+
             else:
                 print(dedent(rooms.DiningRoom.descr_slowdown))
+
         elif choice == "Go downstairs":
             print(rooms.DiningRoom.choices.get(choice))
             add_points(1,'din_down')
+
         else:
             common_input(choice, hints)
 
