@@ -271,8 +271,6 @@ def common_input(choice, hints=None):
 def enter_basement():
     """Handles event loop and game state for basement."""
 
-    basement = rooms.Basement()
-
     hints = rooms.Basement.get_choices()
 
     print(dedent(rooms.Basement.description))
@@ -288,7 +286,7 @@ def enter_basement():
             dead(dedent(rooms.Basement.choices.get(choice)))
 
         elif choice == "Go upstairs":
-            if basement.notebook_read == False:
+            if rooms.Basement.notebook_read == False:
                 dead(dedent(rooms.Basement.descr_banana))
             else:
                 print(dedent(rooms.Basement.choices.get(choice)))
@@ -297,7 +295,7 @@ def enter_basement():
 
         elif choice == "Read notebook":
             print(dedent(rooms.Basement.choices.get(choice)))
-            basement.notebook_read = True
+            rooms.Basement.notebook_read = True
             add_points(10, 'base_read')
 
         elif choice == "Look around":
@@ -319,7 +317,7 @@ def enter_diningroom(seen_mannequin=False):
     print(rooms.DiningRoom.description)
 
     rooms.DiningRoom.look_around = seen_mannequin
-    
+
     hints = rooms.DiningRoom.get_choices()
 
     while(True):

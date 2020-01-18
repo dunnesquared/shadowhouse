@@ -6,6 +6,8 @@ class Room():
 
 class Basement(Room):
 
+    notebook_read = False
+
     description = '''
     You are sitting on a cozy sofa in the basement of your childhood home.
 
@@ -85,8 +87,6 @@ class Basement(Room):
                 "Look around": descr_around
               }
 
-    def __init__(self):
-        self.notebook_read = False
 
 
 class DiningRoom(Room):
