@@ -1,4 +1,5 @@
 import sys
+import os
 from random import randint
 from textwrap import dedent
 from time import sleep
@@ -46,7 +47,6 @@ WINNER_NAME = 'Anonymous'
 """----------------------------HELPER FUNCTIONS------------------------------"""
 #Functions which if they did nothing would not really hinder game play, but
 #would make it highly awkward
-
 def show_hints(hints):
     '''Show possible commands for a given room'''
 
@@ -154,6 +154,28 @@ def ascii_animation():
     #Pause for three seconds
     sleep(3)
 
+def _get_dir():
+    """Returns absolute path of the directory where module exists.
+
+    Returns:
+        dir (str): the unique ('canonical') absolute path of the directory
+                   containing the module (i.e. no symbolic links in path).
+    """
+
+    # Get the current working directory in Terminal
+    # when you try to launch the module as a script
+    cwd = os.getcwd()
+
+    # Get the name of the directory where the module exists
+    module_dir = os.path.dirname(__file__)
+
+    # Intelligently cocantenate the two
+    joinedpath = os.path.join(cwd, module_dir)
+
+    # Get rid of any possible symbolic links found along and return the
+    # absolute path
+    return os.path.realpath(joinedpath)
+
 
 def write_winner_to_file():
     '''Write date, player's name and score to file'''
@@ -177,8 +199,14 @@ def write_winner_to_file():
     #Combine all parts together to form single string record
     rec = WINNER_NAME + '\t'*3 + right_now + '\t'*3 + s_score + "\n"
 
-    #Put file in append mode
-    file_handler = open("data/scores.txt", 'a')
+    # Get directory where input exists, i.e. same dir as this module
+    absdir = _get_dir()
+
+    # Intelligently concatenate the directory and the input file name
+    # together
+    full_filename = os.path.join(absdir, "scores.dat")
+
+    file_handler = open(full_filename, 'a')
 
     file_handler.write(rec +"\n")
 
