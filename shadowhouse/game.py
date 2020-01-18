@@ -269,20 +269,24 @@ def common_input(choice, hints=None):
 """----------------------------STORY FUNCTIONS------------------------------"""
 
 def enter_basement():
+    """Handles event loop and game state for basement."""
+
     basement = rooms.Basement()
+
     hints = rooms.Basement.get_choices()
 
     print(dedent(rooms.Basement.description))
 
-    # Get input
     while(True):
         choice = input("\n> ")
         choice = choice.strip()
 
         if choice == "Watch TV":
             dead(dedent(rooms.Basement.choices.get(choice)))
+
         elif choice == "Squash spider":
             dead(dedent(rooms.Basement.choices.get(choice)))
+
         elif choice == "Go upstairs":
             if basement.notebook_read == False:
                 dead(dedent(rooms.Basement.descr_banana))
@@ -290,21 +294,33 @@ def enter_basement():
                 print(dedent(rooms.Basement.choices.get(choice)))
                 add_points(5, 'base_upstairs')
                 enter_diningroom()
+
         elif choice == "Read notebook":
             print(dedent(rooms.Basement.choices.get(choice)))
             basement.notebook_read = True
             add_points(10, 'base_read')
+
         elif choice == "Look around":
             print(dedent(rooms.Basement.choices.get(choice)))
+
         else:
             common_input(choice, hints)
 
 
 def enter_diningroom(seen_mannequin=False):
+    """Handles event loop and game state for basement.
+
+    Args:
+        seen_mannequin: Boolean that describes whether player has already
+                        seen the mannequin in this room. By default, she
+                        has not.
+    """
 
     print(rooms.DiningRoom.description)
 
     diningroom = rooms.DiningRoom(seen_mannequin)
+
+    # Has yet to talk to mannequin 
     diningroom.talk_once = False
     diningroom.talk_twice = False
 
