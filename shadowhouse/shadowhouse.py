@@ -60,9 +60,10 @@ import sys
 
 import game
 
+
 def run_game():
-    '''Start running game. Handle CTRL-C exception from user in case she
-    quits game this way (avoids printing ugly stack trace)'''
+    """Starts game. Handles CTRL-C exception from users in case they
+    quits game this way."""
 
     print("")
     print("\t      ****************SHADOW HOUSE****************")
@@ -74,12 +75,10 @@ def run_game():
 
     try:
         game.enter_basement()
-    except KeyboardInterrupt: #user kills process with Ctrl-C
+    except KeyboardInterrupt: # user kills process with Ctrl-C
         print("\n")
         sys.exit()
 
 
-
-"""----------------------------------MAIN------------------------------------"""
 if __name__ == "__main__":
     run_game()
