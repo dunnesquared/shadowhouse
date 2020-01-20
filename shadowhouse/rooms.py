@@ -236,6 +236,8 @@ class Kitchen(Room):
 
 class Garden(Room):
 
+    seen_ladder = False
+
     description = "\nYou are in the back garden."
 
     descr_around = '''

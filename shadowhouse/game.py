@@ -465,8 +465,8 @@ def enter_kitchen():
             common_input(choice, hints)
 
 
-def enter_garden(seen_ladder=False):
-    '''Garden Room'''
+def enter_garden():
+    """Handles event loop and game state for garden."""
 
     print(dedent(rooms.Garden.description))
 
@@ -491,7 +491,7 @@ def enter_garden(seen_ladder=False):
             The hollow of the well is pitch-black. A rope ladder hangs from the
             the top of the well and along its inner wall.'''
             print(dedent(rooms.Garden.choices.get(choice)))
-            seen_ladder = True
+            rooms.Garden.seen_ladder = True
             add_points(5, "gard_well")
 
         elif choice == "Go south":
@@ -499,14 +499,11 @@ def enter_garden(seen_ladder=False):
             add_points(1,'gard_south')
 
         elif choice == "Go down ladder":
-            if(seen_ladder == False):
+            if(rooms.Garden.seen_ladder == False):
                 print("\nWhat ladder?")
             else:
                 add_points(5, "gard_down")
                 enter_well()
-
-        elif choice == "Hint":
-            show_hints(hints)
 
         else:
             common_input(choice, hints)
@@ -528,7 +525,7 @@ def enter_well():
 
         if choice == "Go up ladder":
             print(dedent(rooms.Well.choices.get(choice)))
-            enter_garden(seen_ladder=True)
+            enter_garden()
 
         elif choice == "Go down ladder":
             print(dedent(rooms.Well.choices.get(choice)))
@@ -540,7 +537,7 @@ def enter_well():
 
         elif choice == "Score" or choice == "score": show_score()
         elif choice == "Hint" or choice == "hint":
-            print("Fizzzzzzzzzzzzzzzzzzzzzzzzz....")
+            print("\nFizzzzzzzzzzzzzzzzzzzzzzzzz....")
         else:
             pass
 
