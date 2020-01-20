@@ -1,3 +1,18 @@
+"""Game logic module for Shadow House.
+
+Supports all functions to play Shadow House, from the logic
+necessary to support different narrative scenarios to mundane tasks such
+as updating player's score and quitting.
+
+Suggested improvements for next version:
+* Make all commands case insensitive.
+* Create a Player class that would hold player's name and running score,
+  possibly even state data rather having that in the Room classes.
+* Redesign game top-to-bottom to support a Map-Scene engine
+* use 'from rooms.Rooms import Basement, DiningRoom, ...' to make code
+  less wordy.
+"""
+
 import sys
 import os
 import random
