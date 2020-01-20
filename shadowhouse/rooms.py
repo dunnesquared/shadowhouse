@@ -18,15 +18,30 @@ meant either making the Room objects global or passing objects from room to
 room. For a small game like this, however, the class member variable solution
 works and decouples a lot of game data from game logic
 in an arguably intuitve way.
+
+Suggested improvements for next version:
+* Move all game state data away from room into player class.
 """
 
 class Room():
+    """Parent class of various rooms player enters in game."""
+
     @classmethod
     def get_choices(cls):
+        """Gets list of choices user can make in aroom."""
         return list(cls.choices.keys())
 
 
 class Basement(Room):
+    """Class representing the basement in the story.
+
+    Attributes:
+        notebook_read: Boolean describing whether player read a notebook.
+        description: String containing room's description.
+        descr_*: Strings containing text describing the results of a
+                 user's choice.
+        choices: Dictionary containing choice:description pairs.
+    """
 
     notebook_read = False
 
@@ -110,8 +125,22 @@ class Basement(Room):
               }
 
 
-
 class DiningRoom(Room):
+    """Class representing the dining room in the story.
+
+    Attributes:
+        passcode: List of integers containing passcode to open garden door.
+        talk_once: Boolean describing whether player has spoken once to
+                   mannequin.
+        talk_twice: Boolean describing whether player has spoken twice to
+                    mannequin.
+        look_around: Boolean describing whether player has looked around the
+                     room.
+        description: String containing room's description.
+        descr_*: Strings containing text describing the results of a
+                 user's choice.
+        choices: Dictionary containing choice:description pairs.
+    """
 
     passcode = None
     talk_once = False
@@ -187,18 +216,26 @@ class DiningRoom(Room):
                 "Look around": descr_around
               }
 
-
     @classmethod
     def stringify_passcode(cls):
+        """Formats and returns passcode in a way player can easily read."""
         return f"{cls.passcode[0]} {cls.passcode[1]} {cls.passcode[2]} {cls.passcode[3]}"
 
 
 class Kitchen(Room):
+    """Class representing the kitchen in the story.
 
+    Attributes:
+        potatoes: Integer representing the number of potaotes the player has
+                  picked up.
+        description: String containing room's description.
+        descr_*: Strings containing text describing the results of a
+                 user's choice.
+        choices: Dictionary containing choice:description pairs.
+    """
+    potatoes = 0
 
     description = "\nYou are in the kitchen."
-
-    potatoes = 0
 
     descr_door = "\nThe door is locked. You notice a keypad on the door."
 
@@ -257,6 +294,15 @@ class Kitchen(Room):
 
 
 class Garden(Room):
+    """Class representing the garden in the story.
+
+    Attributes:
+        seen_ladder: Boolean describing whether player has seen the ladder.
+        description: String containing room's description.
+        descr_*: Strings containing text describing the results of a
+                 user's choice.
+        choices: Dictionary containing choice:description pairs.
+    """
 
     seen_ladder = False
 
@@ -298,7 +344,6 @@ class Garden(Room):
     there is no door knob, let alone a keypad on this side of the
     door.'''
 
-
     choices = {
                 "Follow cat": descr_cat,
                 "Look in well": descr_well,
@@ -309,6 +354,15 @@ class Garden(Room):
 
 
 class Well(Room):
+    """Class representing the well in the story.
+
+    Attributes:
+        description: String containing room's description.
+        descr_*: Strings containing text describing the results of a
+                 user's choice.
+        choices: Dictionary containing choice:description pairs.
+    """
+
     description = '''
     You reach the ladder's final rung and sense you are nowhere near the well’s
     bottom. Your stretched-out foot cuts empty air.
@@ -328,7 +382,14 @@ class Well(Room):
                 "Go down ladder": descr_downladder
               }
 
+
 class Win(Room):
+    """Class representing the final scene in the story.
+
+    Attributes:
+        description: String containing room's description.
+    """
+
     description = '''
     Although it seems to take an infinite amount of energy to release your
     grip, you let go of the ladder and begin to drop through the void.
