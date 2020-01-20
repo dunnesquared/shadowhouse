@@ -1,3 +1,25 @@
+"""Module containing the descriptions that make up Shadow House's story.
+
+This module is made up of several classes that contain descriptions
+of each room a player can enter. Within each room choices can be made
+and each corresponding class has descriptions of those as well. Rooms
+such as Basement, DiningRoom, etc., all inherit from parent class Room. None of
+the classes currently instantiate objectsm and rather function more like
+glorified dictionaries.
+
+An important feature of most classes is that they contain class memeber
+variables that are needed to define game state (e.g. In Basement, the boolean
+value of notebook_read determines whether a player will ultimately
+live or die!).
+
+The decision to use class member variables is one of convenience and,
+perhapsm not the best design decision. Using object member variables would've
+meant either making the Room objects global or passing objects from room to
+room. For a small game like this, however, the class member variable solution
+works and decouples a lot of game data from game logic
+in an arguably intuitve way.
+"""
+
 class Room():
     @classmethod
     def get_choices(cls):
