@@ -537,9 +537,9 @@ def enter_well():
 
 
 def win():
-    '''You win! Game over.'''
+    """Handles final scene of game."""
 
-    #Trivial animation of player 'falling'
+    # Text-based animation of player 'falling'
     ascii_animation()
 
     print(dedent(rooms.Win.description))
@@ -548,9 +548,9 @@ def win():
 
 
 def end_game():
-    '''It's all over: show the final score; write winner's name to file; roll
-    the credits; exit.'''
-
+    """Handles end of program contingent on player winning the game:
+    displays final score and writes it to file; quits program.
+    """
     global WINNER_NAME
 
     show_score()
@@ -563,8 +563,6 @@ def end_game():
     '''
     print(dedent(s_goodbye))
 
-    write_winner_to_file() #Optional: game will run fine if you comment this out
-
+    write_winner_to_file()
     credits()
-
     quit()
