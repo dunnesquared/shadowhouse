@@ -473,10 +473,7 @@ def enter_garden():
     hints = rooms.Garden.get_choices()
 
     while(True):
-
         choice = input("\n> ")
-
-        #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
 
         if choice =="Look around":
@@ -487,9 +484,6 @@ def enter_garden():
             dead(dedent(rooms.Garden.choices.get(choice)))
 
         elif choice == "Look in well":
-            s_inwell = '''
-            The hollow of the well is pitch-black. A rope ladder hangs from the
-            the top of the well and along its inner wall.'''
             print(dedent(rooms.Garden.choices.get(choice)))
             rooms.Garden.seen_ladder = True
             add_points(5, "gard_well")
