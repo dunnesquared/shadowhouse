@@ -504,18 +504,13 @@ def enter_garden():
 
 
 def enter_well():
-    '''Well room'''
+    """Handles event loop and game state for well."""
 
     print(dedent(rooms.Well.description))
 
     while(True):
-
         choice = input("\n> ")
-
-        #remove leading and trailing white spaces from user's commands
         choice = choice.strip()
-
-        if choice == "Quit" or choice == "quit": quit()
 
         if choice == "Go up ladder":
             print(dedent(rooms.Well.choices.get(choice)))
@@ -529,9 +524,14 @@ def enter_well():
             add_points(25, 'well_fall')
             win()
 
-        elif choice == "Score" or choice == "score": show_score()
+        # Don't use common input here For narrative reasons, players
+        # are deliberately not told Hints nor is their input invalidated.
+        elif choice == "Score" or choice == "score":
+            show_score()
         elif choice == "Hint" or choice == "hint":
             print("\nFizzzzzzzzzzzzzzzzzzzzzzzzz....")
+        elif choice == "Quit" or choice == "quit":
+            quit()
         else:
             pass
 
