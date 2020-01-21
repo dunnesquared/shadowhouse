@@ -1,4 +1,4 @@
-# Shadow House
+# Shadow House 👻
 
 A supernatural mini text adventure!
 
