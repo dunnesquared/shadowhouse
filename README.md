@@ -1,6 +1,6 @@
 # Shadow House
 
-A mini, supernatural text adventure!
+A supernatural mini text adventure!
 
 ![alt text][snapshot]
 
