@@ -23,7 +23,7 @@ from datetime import datetime
 # Module containing descriptions of each room player enters
 import rooms
 
-"""---------------------------------GLOBAL----------------------------------"""
+# --------------------------------GLOBAL----------------------------------
 
 '''Accumulated points'''
 POINTS = 0
@@ -33,28 +33,28 @@ TOTAL = 119
 
 '''Dictionary to keep track of which points players has garnered'''
 DICT_SCORE = {
-            'base_read': False,
-            'base_upstairs':False,
-            'din_look': False,
-            'din_talk1': False,
-            'din_talk2': False,
-            'din_talk3': False,
-            'din_left': False,
-            'din_touch': False,
-            'din_down': False,
-            'kit_look': False,
-            'kit_pot1': False,
-            'kit_pot2': False,
-            'kit_pot3': False,
-            'kit_code': False,
-            'kit_open': False,
-            'gard_look': False,
-            'gard_well': False,
-            'gard_down': False,
-            'gard_south': False,
-            'well_fall': False,
-            'well_down': False
-            }
+        'base_read': False,
+        'base_upstairs':False,
+        'din_look': False,
+        'din_talk1': False,
+        'din_talk2': False,
+        'din_talk3': False,
+        'din_left': False,
+        'din_touch': False,
+        'din_down': False,
+        'kit_look': False,
+        'kit_pot1': False,
+        'kit_pot2': False,
+        'kit_pot3': False,
+        'kit_code': False,
+        'kit_open': False,
+        'gard_look': False,
+        'gard_well': False,
+        'gard_down': False,
+        'gard_south': False,
+        'well_fall': False,
+        'well_down': False
+        }
 
 '''Player's name. Anonymous if none specified.'''
 WINNER_NAME = 'Anonymous'
@@ -69,7 +69,7 @@ Special thanks to LK for additional dialogue concepts ;-).
 Copyright © Alex Dunne, 2018-2020. All rights reserved.
 '''
 
-"""----------------------------HELPER FUNCTIONS-----------------------------"""
+# ----------------------------HELPER FUNCTIONS-----------------------------
 
 def show_hints(hints):
     """Prints allowable commands for a given room.
@@ -85,13 +85,14 @@ def show_hints(hints):
         print(item)
 
 
-def add_points(num, id=None):
+def add_points(num, point_id=None):
     """Adds points to score while ensuring players aren't 'double-dipping'
     (i.e. repeating the same action to increase score)
 
     Args:
         num: Integer number of points to be added.
-        id: String the identifies part of game where player earned points.
+        point_id: String the identifies part of game where player earned points
+                  and any additional context.
     """
 
     global POINTS
@@ -100,10 +101,10 @@ def add_points(num, id=None):
     # If no id specified, just add the points.
     # Otherwise, change id from False to True for first-time scoring.
     # If already True, then player has already earned points. Do nothing.
-    if id == None:
+    if point_id is None:
         POINTS += num
-    elif DICT_SCORE[id] == False:
-        DICT_SCORE[id] = True
+    elif DICT_SCORE[point_id] == False:
+        DICT_SCORE[point_id] = True
         POINTS += num
     else:
         pass
@@ -115,14 +116,14 @@ def show_score():
     print(f"\nScore: {POINTS} out of {TOTAL} points")
 
 
-def bad_input(input):
+def bad_input(player_input):
     """Prints feedback when player enters illegal commands or nothing.
 
     Args:
-        input: String representing player's command.
+        player_input: String representing player's command.
 
     """
-    if len(input.strip()) == 0:
+    if len(player_input.strip()) == 0:
         print("\nC'mon. Don't be a dweeb. Write something.")
     else:
         s_words = '''
@@ -141,10 +142,10 @@ def dead(why):
     print(why)
     print("\nThanks for playing! Better luck next time :-p.\n")
 
-    quit()
+    quit_game()
 
 
-def quit():
+def quit_game():
     """Exits game."""
 
     print("") # For aesthetic purposes
@@ -258,7 +259,7 @@ def write_winner_to_file():
         sys.exit()
 
 
-def credits():
+def show_credits():
     """Prints end credits."""
     print(dedent(CREDITS))
 
@@ -271,17 +272,17 @@ def common_input(choice, hints=None):
         hints: List of choices players can enter in a room.
     """
 
-    if choice == "Quit" or choice == "quit":
-        quit()
-    elif choice == "Score" or choice == "score":
+    if choice in ["Quit", "quit", "quit game", "Quit game"]:
+        quit_game()
+    elif choice in ["Score", "score"]:
         show_score()
-    elif choice == "Hint" or choice == "hint":
+    elif choice in ["Hint", "hint"]:
         show_hints(hints)
     else:
         bad_input(choice)
 
 
-"""----------------------------STORY FUNCTIONS------------------------------"""
+# ----------------------------STORY FUNCTIONS------------------------------
 
 def enter_basement():
     """Handles event loop and game state for basement."""
@@ -290,7 +291,7 @@ def enter_basement():
 
     print(dedent(rooms.Basement.description))
 
-    while(True):
+    while True:
         choice = input("\n> ")
         choice = choice.strip()
 
@@ -301,7 +302,7 @@ def enter_basement():
             dead(dedent(rooms.Basement.choices.get(choice)))
 
         elif choice == "Go upstairs":
-            if rooms.Basement.notebook_read == False:
+            if not rooms.Basement.notebook_read:
                 dead(dedent(rooms.Basement.descr_banana))
             else:
                 print(dedent(rooms.Basement.choices.get(choice)))
@@ -327,12 +328,12 @@ def enter_diningroom():
 
     hints = rooms.DiningRoom.get_choices()
 
-    while(True):
+    while True:
         choice = input("\n> ")
 
         choice = choice.strip()
 
-        if choice=="Look around":
+        if choice == "Look around":
             print(dedent(rooms.DiningRoom.choices.get(choice)))
             rooms.DiningRoom.look_around = True
             add_points(10, 'din_look')
@@ -347,36 +348,39 @@ def enter_diningroom():
         elif choice == "Talk to mannequin":
 
             # Can't talk to mannequin unless player has seen it first
-            if rooms.DiningRoom.look_around == True:
+            if rooms.DiningRoom.look_around:
 
-                if rooms.DiningRoom.talk_once == False:
+                if not rooms.DiningRoom.talk_once:
                     rooms.DiningRoom.talk_once = True
                     print(dedent(rooms.DiningRoom.choices.get(choice)))
                     add_points(5, 'din_talk1')
 
-                elif rooms.DiningRoom.talk_twice == False:
+                elif not rooms.DiningRoom.talk_twice:
                     rooms.DiningRoom.talk_twice = True
 
                     rooms.DiningRoom.passcode = [
-                                                 random.randint(0,9),
-                                                 random.randint(0,9),
-                                                 random.randint(0,9),
-                                                 random.randint(0,9)
-                                                ]
+                        random.randint(0, 9),
+                        random.randint(0, 9),
+                        random.randint(0, 9),
+                        random.randint(0, 9)
+                        ]
 
-                    print(f'\n"{rooms.DiningRoom.descr_passcode} {rooms.DiningRoom.stringify_passcode()}"')
+                    descr_passcode = rooms.DiningRoom.descr_passcode
+                    str_passcode = rooms.DiningRoom.stringify_passcode()
+
+                    print(f'\n"{descr_passcode} {str_passcode}"')
 
                     add_points(10, 'din_talk2')
 
                 else:
                     print(dedent(rooms.DiningRoom.descr_toomuch))
-                    add_points(1,'din_talk3')
+                    add_points(1, 'din_talk3')
 
             else:
                 print(rooms.DiningRoom.descr_nomannequin)
 
         elif choice == "Go left":
-            if rooms.DiningRoom.look_around == True:
+            if rooms.DiningRoom.look_around:
                 add_points(5, 'din_left')
                 enter_kitchen()
 
@@ -385,7 +389,7 @@ def enter_diningroom():
 
         elif choice == "Go downstairs":
             print(rooms.DiningRoom.choices.get(choice))
-            add_points(1,'din_down')
+            add_points(1, 'din_down')
 
         else:
             common_input(choice, hints)
@@ -399,9 +403,8 @@ def enter_kitchen():
     hints = rooms.Kitchen.get_choices()
 
     #choices
-    while(True):
+    while True:
         choice = input("\n> ")
-
         choice = choice.strip()
 
         if choice == "Look around":
@@ -410,11 +413,11 @@ def enter_kitchen():
 
         elif choice == "Open door":
             print(rooms.Kitchen.choices.get(choice))
-            add_points(1,'kit_open')
+            add_points(1, 'kit_open')
 
         elif choice == "Pick up potato":
             if rooms.Kitchen.potatoes < 3:
-                rooms.Kitchen.potatoes +=1
+                rooms.Kitchen.potatoes += 1
                 print("")
                 print(rooms.Kitchen.potatoes, "potato.")
                 add_points(1, 'kit_pot' + str(rooms.Kitchen.potatoes))
@@ -422,7 +425,7 @@ def enter_kitchen():
                 print(dedent(rooms.Kitchen.descr_chill))
 
         elif choice == "Drop potatoes":
-            if(rooms.Kitchen.potatoes != 0):
+            if rooms.Kitchen.potatoes != 0:
                 print("\nOkay.")
                 add_points(rooms.Kitchen.potatoes * (-1))
                 rooms.Kitchen.potatoes = 0
@@ -436,8 +439,7 @@ def enter_kitchen():
 
             try:
                 # Compare with passcode mannequin gave
-                if rooms.DiningRoom.passcode != None:
-
+                if rooms.DiningRoom.passcode != []:
                     n1 = int(input("\nEnter first digit: "))
                     n2 = int(input("Enter second digit: "))
                     n3 = int(input("Enter third digit: "))
@@ -455,17 +457,17 @@ def enter_kitchen():
 
                     # Go to garden if pass-code is right and user has picked up
                     # all the potatoes
-                    if correct == True and rooms.Kitchen.potatoes == 3:
+                    if correct and rooms.Kitchen.potatoes == 3:
                         print("\nThe door unlocks!")
                         add_points(10, 'kit_code')
                         enter_garden()
 
-                    elif correct == True and rooms.Kitchen.potatoes != 3:
+                    elif correct and rooms.Kitchen.potatoes != 3:
                         print(dedent(rooms.Kitchen.descr_noopen))
 
-                    elif correct == False:
+                    elif not correct:
                         input(dedent(rooms.Kitchen.descr_wrong))
-                        dead(dedent(ooms.Kitchen.descr_explode))
+                        dead(dedent(rooms.Kitchen.descr_explode))
 
                 else:
                     print(dedent(rooms.Kitchen.descr_secondshot))
@@ -487,11 +489,11 @@ def enter_garden():
 
     hints = rooms.Garden.get_choices()
 
-    while(True):
+    while True:
         choice = input("\n> ")
         choice = choice.strip()
 
-        if choice =="Look around":
+        if choice == "Look around":
             print(dedent(rooms.Garden.choices.get(choice)))
             add_points(10, "gard_look")
 
@@ -505,10 +507,10 @@ def enter_garden():
 
         elif choice == "Go south":
             print(dedent(rooms.Garden.choices.get(choice)))
-            add_points(1,'gard_south')
+            add_points(1, 'gard_south')
 
         elif choice == "Go down ladder":
-            if(rooms.Garden.seen_ladder == False):
+            if not rooms.Garden.seen_ladder:
                 print("\nWhat ladder?")
             else:
                 add_points(5, "gard_down")
@@ -523,7 +525,7 @@ def enter_well():
 
     print(dedent(rooms.Well.description))
 
-    while(True):
+    while True:
         choice = input("\n> ")
         choice = choice.strip()
 
@@ -541,12 +543,12 @@ def enter_well():
 
         # Don't use common input here For narrative reasons, players
         # are deliberately not told Hints nor is their input invalidated.
-        elif choice == "Score" or choice == "score":
+        elif choice in ["Score", "score"]:
             show_score()
-        elif choice == "Hint" or choice == "hint":
+        elif choice in ["Hint", "hint"]:
             print("\nFizzzzzzzzzzzzzzzzzzzzzzzzz....")
-        elif choice == "Quit" or choice == "quit":
-            quit()
+        elif choice in ["Quit", "quit"]:
+            quit_game()
         else:
             pass
 
@@ -579,5 +581,5 @@ def end_game():
     print(dedent(s_goodbye))
 
     write_winner_to_file()
-    credits()
-    quit()
+    show_credits()
+    quit_game()

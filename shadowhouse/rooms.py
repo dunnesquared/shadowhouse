@@ -26,6 +26,8 @@ Suggested improvements for next version:
 class Room():
     """Parent class of various rooms player enters in game."""
 
+    choices = {}
+
     @classmethod
     def get_choices(cls):
         """Gets list of choices user can make in aroom."""
@@ -48,7 +50,7 @@ class Basement(Room):
     description = '''
     You are sitting on a cozy sofa in the basement of your childhood home.
 
-    Night paints small windows that open on to the front lawn and the
+    Night paints small windows that open onto the front lawn and the
     alley between your house and the neighbour’s. The air is cool down here.
     A sticky film of sweat coats your bare legs and arms.
 
@@ -122,7 +124,7 @@ class Basement(Room):
                 "Go upstairs": descr_upstairs,
                 "Read notebook": descr_notebook,
                 "Look around": descr_around
-              }
+                }
 
 
 class DiningRoom(Room):
@@ -142,7 +144,7 @@ class DiningRoom(Room):
         choices: Dictionary containing choice:description pairs.
     """
 
-    passcode = None
+    passcode = []
     talk_once = False
     talk_twice = False
     look_around = False
@@ -214,12 +216,16 @@ class DiningRoom(Room):
                 "Go left": descr_left,
                 "Go downstairs": descr_down,
                 "Look around": descr_around
-              }
+                }
 
     @classmethod
     def stringify_passcode(cls):
         """Formats and returns passcode in a way player can easily read."""
-        return f"{cls.passcode[0]} {cls.passcode[1]} {cls.passcode[2]} {cls.passcode[3]}"
+        pc1 = cls.passcode[0]
+        pc2 = cls.passcode[1]
+        pc3 = cls.passcode[2]
+        pc4 = cls.passcode[3]
+        return f"{pc1} {pc2} {pc3} {pc4}"
 
 
 class Kitchen(Room):
@@ -290,7 +296,7 @@ class Kitchen(Room):
                 "Kiss potatoes": descr_kiss,
                 "Enter pass-code": None,
                 "Look around": descr_around
-              }
+                }
 
 
 class Garden(Room):
@@ -350,7 +356,7 @@ class Garden(Room):
                 "Go south": descr_south,
                 "Go down ladder": None,
                 "Look around": descr_around
-              }
+                }
 
 
 class Well(Room):
@@ -380,7 +386,7 @@ class Well(Room):
     choices = {
                 "Go up ladder": descr_upladder,
                 "Go down ladder": descr_downladder
-              }
+                }
 
 
 class Win(Room):
