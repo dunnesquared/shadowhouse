@@ -1,7 +1,6 @@
 TODO
 *.py[cod]
-__pycache__/ #Exclude the whole folder
-venv/
+shadowhouse/__pycache__/ # Exclude the whole folder
 shadowhouse/__init__.py
 venv
 99_oldversion
