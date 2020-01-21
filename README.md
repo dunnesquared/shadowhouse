@@ -7,14 +7,14 @@ A supernatural mini text adventure!
 ## How to play
 After cloning or downloading the repo, you can play in one of two ways:
 
-###1. Run shadowhouse.py.
+### 1. Run shadowhouse.py.
 Navigate to the `shadowhouse` directory and run
 
 ```sh
 python3 shadowhouse.py
 ```
 
-###2. Run the Bash shell script.
+### 2. Run the Bash shell script.
 This option alters the shell's look and feel, giving it a more 'retro'
 aesthetic.
 
