@@ -5,3 +5,4 @@ shadowhouse/__init__.py
 venv
 99_oldversion
 .DS_Store
+scores.dat
