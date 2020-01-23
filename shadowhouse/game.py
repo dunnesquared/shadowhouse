@@ -64,6 +64,8 @@ CREDITS = '''
 ***CREDITS***
 Story, writing and coding by Alex Dunne.
 Apologies to DFW and DL for using their big ideas for my very small ones.
+Thanks to Zed Shaw for providing the impetus and the basics that made
+this game possible.
 Special thanks to LK for additional dialogue concepts ;-).
 
 Copyright © Alex Dunne, 2018-2020. All rights reserved.

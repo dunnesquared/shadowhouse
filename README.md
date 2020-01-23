@@ -42,10 +42,11 @@ the game's 'creative content' (i.e. narrative, scene descriptions, characters,
 etc.). Learn and play with the code as you like, but no copying or altering
 of the story text or structure, please.
 
-## Special thanks
+## Apologies and thanks
 Apologies to David Foster Wallace and David Lynch for using their big ideas
 for my very small ones.
-
+Thanks to Zed Shaw for providing the impetus and the basics that made
+this game possible.
 Special thanks to LK for additional dialogue concepts ;-).
 
 
