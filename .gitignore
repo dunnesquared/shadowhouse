@@ -6,3 +6,5 @@ venv
 99_oldversion
 .DS_Store
 scores.dat
+__pycache__
+*.icloud
