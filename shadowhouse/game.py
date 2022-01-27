@@ -577,8 +577,7 @@ def end_game():
     WINNER_NAME = input("\nWhat's your name? ")
 
     s_goodbye = f'''
-    Thanks, {WINNER_NAME}, for playing SHADOW HOUSE. Hope to see you again
-    some time :-D!
+    Thanks, {WINNER_NAME}, for playing SHADOW HOUSE. Hope to see you again sometime :-D!
     '''
     print(dedent(s_goodbye))
 
