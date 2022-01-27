@@ -4,7 +4,7 @@ A supernatural mini text adventure!
 
 ![alt text][snapshot]
 
-## How to play
+## How to play from the source code
 After cloning or downloading the repo, you can play in one of two ways:
 
 ### 1. Run shadowhouse.py.
@@ -13,6 +13,8 @@ Navigate to the `shadowhouse` directory and run
 ```sh
 python3 shadowhouse.py
 ```
+
+OR
 
 ### 2. Run the Bash shell script.
 This option alters the shell's look and feel, giving it a more 'retro'
@@ -29,6 +31,13 @@ Then run the script by typing the following on the command-line:
 
 ```sh
 ./shadowhouse.sh.
+```
+
+## How to play using Docker
+Assuming you have Docker installed on your machine, you can start playing without cloning the repo using the following command: 
+
+```sh
+docker container run -it --rm --name shadowhouse dunnesquared/shadowhouse
 ```
 
 ## How to see the scoreboard
