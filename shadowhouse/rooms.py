@@ -318,7 +318,7 @@ class Garden(Room):
     It is dark, but, by the glow of the half-moon, you can make out the
     lip of a well twelve paces ahead of you.
 
-    An orange and white cat walks toward a hole in the back fence.
+    An orange-and-white cat walks toward a hole in the back fence.
 
     South is the kitchen.'''
 

@@ -1,0 +1,19 @@
+# Ignore git and cache folders
+.git
+.cache
+__pycache__/
+
+# Ignore virtual environment folder
+venv/
+
+# Ignore misc
+TODO
+snapshot.jpeg
+99_oldversion/
+*.py[cod]
+.DS_Store
+scores.dat
+*.icloud
+
+
+
